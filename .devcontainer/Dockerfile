@@ -1,8 +1,11 @@
 FROM debian:bookworm-slim
 
-SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# --------------------------
 # Install system dependencies
+# --------------------------
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
@@ -12,38 +15,47 @@ RUN apt-get update \
         sudo \
     && rm -rf /var/lib/apt/lists/*
 
-# Install UV (Python package manager)
-RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
 
-# Install NVM and Node.js (latest)
-ENV NVM_DIR=/usr/local/nvm
-RUN mkdir -p "$NVM_DIR" \
-    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash \
-    && source "$NVM_DIR/nvm.sh" \
-    && nvm install node \
-    && nvm alias default node \
-    && nvm cache clear
 
-# Symlink node binaries so they are available in non-interactive shells
-RUN LATEST_NODE="$(ls "$NVM_DIR/versions/node" | sort -V | tail -1)" \
-    && ln -sf "$NVM_DIR/versions/node/$LATEST_NODE/bin/node" /usr/local/bin/node \
-    && ln -sf "$NVM_DIR/versions/node/$LATEST_NODE/bin/npm"  /usr/local/bin/npm \
-    && ln -sf "$NVM_DIR/versions/node/$LATEST_NODE/bin/npx"  /usr/local/bin/npx
+# -------------------------
+# Install UV
+# -------------------------
 
-# Make NVM available in interactive shells (system-wide)
-RUN printf 'export NVM_DIR="/usr/local/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"\n' \
-    > /etc/profile.d/nvm.sh \
-    && chmod +x /etc/profile.d/nvm.sh
+# https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+ENV PATH="/root/.local/bin/:$PATH"
+
+# -------------------------
+# Install NVM
+# -------------------------
+
+# https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-in-docker
+ENV BASH_ENV=/root/.bash_env
+RUN touch "${BASH_ENV}"
+RUN echo '. "${BASH_ENV}"' >> ~/.bashrc
+
+# Download and install nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | PROFILE="${BASH_ENV}" bash
+RUN echo node > .nvmrc
+RUN nvm install
+
+
+# -------------------------
+# Finalize user setup
+# -------------------------
 
 # Create non-root developer user
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+ENV NVM_DIR=/root/.nvm
+
 RUN groupadd --gid "$USER_GID" "$USERNAME" \
     && useradd --uid "$USER_UID" --gid "$USER_GID" -m -s /bin/bash "$USERNAME" \
     && echo "$USERNAME ALL=(root) NOPASSWD:ALL" > "/etc/sudoers.d/$USERNAME" \
     && chmod 0440 "/etc/sudoers.d/$USERNAME" \
-    && cat /etc/profile.d/nvm.sh >> "/home/$USERNAME/.bashrc"
+    && cat "${BASH_ENV}" >> "/home/$USERNAME/.bashrc"
 
 USER $USERNAME
