@@ -5,6 +5,13 @@
     "context": ".."
   },
   "remoteUser": "vscode",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
   "customizations": {
     "vscode": {
       "settings": {
@@ -12,6 +19,8 @@
         "editor.formatOnSave": true
       },
       "extensions": [
+        "github.copilot",
+        "github.copilot-chat",
         "ms-python.python",
         "ms-python.vscode-pylance",
         "charliermarsh.ruff",
