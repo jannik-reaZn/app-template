@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+.python-version
+
+# UV
+uv.lock
+
+# Node
+node_modules/
+.npm/
+.next/
+.nuxt/
+dist/
+build/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode/settings.json
+*.swp
+*.swo
+.DS_Store
