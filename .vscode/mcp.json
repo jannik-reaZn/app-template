@@ -1,9 +1,8 @@
 {
   "servers": {
     "MCP-Test": {
-      "type": "stdio",
-      "command": "/workspaces/app-template/backend/.venv/bin/python",
-      "args": ["/workspaces/app-template/backend/server.py"]
+      "type": "sse",
+      "url": "http://localhost:8000/sse"
     }
   },
   "inputs": []
