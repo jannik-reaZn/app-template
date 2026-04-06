@@ -12,7 +12,7 @@ from tools.get_python_version import get_python_version
 from tools.list_packages import list_packages
 from tools.suggest_drift_fixes import suggest_drift_fixes
 
-mcp = FastMCP("Template Reference MCP 🚀")
+mcp = FastMCP(name="Application Template Reference MCP")
 
 mcp.tool(get_package_version)
 mcp.tool(list_packages)
@@ -24,5 +24,7 @@ mcp.tool(suggest_drift_fixes)
 mcp.tool(get_file_structure)
 mcp.tool(get_project_info)
 
+mcp_app = mcp.http_app(path="/")
+
 if __name__ == "__main__":
-    mcp.run(port=8001)
+    mcp.run()

@@ -2,7 +2,7 @@
   "servers": {
     "MCP-Test": {
       "type": "http",
-      "url": "http://localhost:8001/mcp"
+      "url": "http://localhost:8000/mcp"
     }
   },
   "inputs": []

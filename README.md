@@ -6,29 +6,14 @@ cd backend && uv run fastmcp run server.py:mcp --transport streamable-http --por
 
 # Send Request to MCP Server
 
-- Step 1: Initialize and save headers
+Run the `send_request_to_mcp.sh` script to send a test request to the MCP server.
 
 ```bash
-curl -s -X POST http://localhost:8001/mcp \
-  -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
-  -d '{"jsonrpc":"2.0","method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"curl","version":"1.0"}},"id":0}' \
-  -D /tmp/headers.txt > /dev/null
+cd backend && ./send_request_to_mcp.sh
 ```
 
-- Step 2: Extract session ID
+# Run FastAPI Server
 
 ```bash
-SESSION_ID=$(grep -i "mcp-session-id" /tmp/headers.txt | awk '{print $2}' | tr -d '\r')
-```
-
-- Step 3: Call the tool
-
-```bash
-curl -X POST http://localhost:8001/mcp \
- -H "Content-Type: application/json" \
- -H "Accept: application/json, text/event-stream" \
- -H "mcp-session-id: $SESSION_ID" \
- -d '{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "add", "arguments": {"a": 2, "b": 3}}, "id": 1}'
-
+cd backend && uv run fastapi dev
 ```

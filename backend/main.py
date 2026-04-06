@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from server import mcp_app
+
+app = FastAPI(lifespan=mcp_app.lifespan)
+
+app.mount("/mcp", mcp_app)
 
 
 @app.get("/")
