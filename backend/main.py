@@ -1,12 +1,6 @@
 from fastapi import FastAPI
 
-from server import mcp_app
+from app.presentation.api.todo_routes import router as todo_router
 
-app = FastAPI(lifespan=mcp_app.lifespan)
-
-app.mount("/mcp", mcp_app)
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app = FastAPI()
+app.include_router(todo_router, prefix="/api")

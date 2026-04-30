@@ -1,0 +1,28 @@
+from app.application.todos.create_todo import CreateTodoUseCase
+from app.domain.todos.errors import EmptyTodoTitleError
+from app.infrastructure.todos.in_memory_repository import InMemoryTodoRepository
+
+
+class StaticTodoIdGenerator:
+    def new(self) -> str:
+        return "todo-123"
+
+
+def test_create_todo_use_case_returns_pending_todo() -> None:
+    use_case = CreateTodoUseCase(InMemoryTodoRepository(), StaticTodoIdGenerator())
+
+    result = use_case.execute(title="Pay electricity bill")
+
+    assert result.is_ok is True
+    assert result.value.id == "todo-123"
+    assert result.value.title == "Pay electricity bill"
+    assert result.value.status == "pending"
+
+
+def test_create_todo_use_case_returns_error_for_blank_title() -> None:
+    use_case = CreateTodoUseCase(InMemoryTodoRepository(), StaticTodoIdGenerator())
+
+    result = use_case.execute(title="   ")
+
+    assert result.is_err is True
+    assert isinstance(result.error, EmptyTodoTitleError)
