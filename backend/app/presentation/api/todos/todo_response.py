@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from app.core import BaseSchema
 
 
-class TodoResponse(BaseModel):
+class TodoResponse(BaseSchema):
     id: str
     title: str
     status: str

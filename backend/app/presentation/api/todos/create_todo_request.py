@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+from app.core import BaseSchema
 
 
-class CreateTodoRequest(BaseModel):
+class CreateTodoRequest(BaseSchema):
     title: str
