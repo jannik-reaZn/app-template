@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from starlette.responses import Response
 
 from app.core import DomainError
-from app.todos.domain.errors import TodoNotFoundError
+from app.presentation.domain_error_statuses import get_domain_error_status
 
 
 async def handle_domain_errors(
@@ -15,9 +15,10 @@ async def handle_domain_errors(
     try:
         return await call_next(request)
     except DomainError as exc:
-        if isinstance(exc, TodoNotFoundError):
-            return JSONResponse(status_code=404, content={"detail": str(exc)})
-        return JSONResponse(status_code=400, content={"detail": str(exc)})
+        return JSONResponse(
+            status_code=get_domain_error_status(exc),
+            content={"detail": str(exc)},
+        )
 
 
 def register_middlewares(app: FastAPI) -> None:
