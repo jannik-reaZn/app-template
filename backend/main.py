@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from app.presentation.middlewares import register_middlewares
 from app.presentation.api.todos.todo_api import router as todo_router
+from app.presentation.middlewares import register_middlewares
 
 app = FastAPI()
 register_middlewares(app)

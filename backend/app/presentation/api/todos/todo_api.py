@@ -4,17 +4,16 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
 
-
-from app.todos.application.create_todo_use_case import CreateTodoUseCase
-from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.presentation.api.routes import ApiRoute
 from app.presentation.api.tags import ApiTag
+from app.presentation.api.todos.create_todo_request import CreateTodoRequest
 from app.presentation.api.todos.dependencies import (
     get_create_todo_use_case,
     get_get_todo_use_case,
 )
-from app.presentation.api.todos.create_todo_request import CreateTodoRequest
 from app.presentation.api.todos.todo_response import TodoResponse
+from app.todos.application.create_todo_use_case import CreateTodoUseCase
+from app.todos.application.get_todo_use_case import GetTodoUseCase
 
 router = APIRouter(tags=[ApiTag.TODOS])
 

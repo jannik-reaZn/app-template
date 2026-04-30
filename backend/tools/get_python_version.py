@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from pydantic import BaseModel
+
 from utils.constants import WORKSPACE_ROOT
 from utils.readers import read_pyproject
-from pydantic import BaseModel
 
 
 class PythonVersionInfo(BaseModel):

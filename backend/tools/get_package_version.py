@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from enum import StrEnum
+
+from pydantic import BaseModel
 
 from utils.readers import parse_python_deps, read_package_json, read_pyproject
-from pydantic import BaseModel
-from enum import StrEnum
 
 
 class EcosystemEnum(StrEnum):
