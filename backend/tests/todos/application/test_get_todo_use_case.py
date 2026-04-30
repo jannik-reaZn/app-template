@@ -1,4 +1,4 @@
-from app.todos.application.get_todo import GetTodoUseCase
+from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.entities import Todo
 from app.todos.domain.errors import TodoNotFoundError
 from app.todos.infrastructure.todo_repository import InMemoryTodoRepository

@@ -5,8 +5,11 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from app.todos.application.create_todo import CreateTodoUseCase, TodoIdGenerator
-from app.todos.application.get_todo import GetTodoUseCase
+from app.todos.application.create_todo_use_case import (
+    CreateTodoUseCase,
+    TodoIdGenerator,
+)
+from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.repositories import TodoRepository
 from app.todos.infrastructure.todo_id_generator import SequentialTodoIdGenerator
 from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
