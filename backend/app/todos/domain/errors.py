@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-
-class DomainError(Exception):
-    pass
+from app.core import DomainError
 
 
 class EmptyTodoTitleError(DomainError):

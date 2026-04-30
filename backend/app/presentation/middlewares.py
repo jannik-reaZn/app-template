@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from starlette.responses import Response
 
-from app.todos.domain.errors import DomainError
+from app.core import DomainError
 
 
 async def handle_domain_errors(
