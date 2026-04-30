@@ -1,12 +1,8 @@
 import pytest
-from polyfactory.pytest_plugin import register_fixture
 
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
-from tests.factory.todo_factory import TodoFactory
-
-register_fixture(TodoFactory)
 
 
 class StaticTodoIdGenerator:
