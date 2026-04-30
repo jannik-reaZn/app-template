@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 
-from app.core import DomainError, Result
+from app.core import DomainError, DomainModel, Result
 from app.todos.domain.errors import EmptyTodoTitleError
 
 TodoStatus = Literal["pending", "completed"]
 
 
-class Todo(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
+class Todo(DomainModel):
     id: str = Field(examples=["todo-123"])
     title: str = Field(examples=["Pay electricity bill"])
     status: TodoStatus = Field(examples=["pending", "completed"])
