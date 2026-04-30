@@ -126,9 +126,9 @@ class Result(Generic[T, E]):
         **kwargs: P.kwargs,
     ) -> Result[T, Exception]:
         try:
-            return Result(_is_ok=True, _value=fn(*args, **kwargs))
+            return cast(Result[T, Exception], Result.ok(fn(*args, **kwargs)))
         except Exception as exc:  # noqa: BLE001
-            return Result(_is_ok=False, _error=exc)
+            return cast(Result[T, Exception], Result.err(exc))
 
     @classmethod
     def combine(cls, results: Iterable[Result[T, E]]) -> Result[list[T], E]:
