@@ -8,4 +8,6 @@ from app.todos.domain.entities import Todo
 
 
 class TodoRepository(Protocol):
+    def get_by_id(self, todo_id: str) -> Result[Todo, DomainError]: ...
+
     def save(self, todo: Todo) -> Result[Todo, DomainError]: ...

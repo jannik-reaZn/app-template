@@ -5,9 +5,13 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 
 from app.todos.application.create_todo import CreateTodoUseCase
+from app.todos.application.get_todo import GetTodoUseCase
 from app.presentation.api.routes import ApiRoute
 from app.presentation.api.tags import ApiTag
-from app.presentation.api.todos.dependencies import get_create_todo_use_case
+from app.presentation.api.todos.dependencies import (
+    get_create_todo_use_case,
+    get_get_todo_use_case,
+)
 from app.presentation.api.todos.create_todo_request import CreateTodoRequest
 from app.presentation.api.todos.todo_response import TodoResponse
 
@@ -28,4 +32,21 @@ def create_todo(
         raise result.error
     return TodoResponse(
         id=result.value.id, title=result.value.title, status=result.value.status
+    )
+
+
+@router.get(
+    ApiRoute.TODO_BY_ID, response_model=TodoResponse, status_code=status.HTTP_200_OK
+)
+def get_todo(
+    todo_id: str,
+    get_todo_use_case: Annotated[GetTodoUseCase, Depends(get_get_todo_use_case)],
+) -> TodoResponse:
+    result = get_todo_use_case.execute(todo_id)
+    if result.is_err:
+        raise result.error
+    return TodoResponse(
+        id=result.value.id,
+        title=result.value.title,
+        status=result.value.status,
     )
