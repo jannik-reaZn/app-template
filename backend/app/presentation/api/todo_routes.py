@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.application.todos.create_todo import CreateTodoUseCase
-from app.domain.todos.errors import DomainError, EmptyTodoTitleError
-from app.infrastructure.todos.in_memory_repository import (
+from app.todos.application.create_todo import CreateTodoUseCase
+from app.todos.domain.errors import DomainError, EmptyTodoTitleError
+from app.todos.infrastructure.in_memory_repository import (
     InMemoryTodoRepository,
     SequentialTodoIdGenerator,
 )

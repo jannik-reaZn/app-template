@@ -5,7 +5,7 @@ from typing import Literal
 
 from app.core import Result
 
-from app.domain.todos.errors import EmptyTodoTitleError
+from app.todos.domain.errors import EmptyTodoTitleError
 
 TodoStatus = Literal["pending", "completed"]
 

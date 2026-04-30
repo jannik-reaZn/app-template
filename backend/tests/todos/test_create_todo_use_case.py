@@ -1,6 +1,6 @@
-from app.application.todos.create_todo import CreateTodoUseCase
-from app.domain.todos.errors import EmptyTodoTitleError
-from app.infrastructure.todos.in_memory_repository import InMemoryTodoRepository
+from app.todos.application.create_todo import CreateTodoUseCase
+from app.todos.domain.errors import EmptyTodoTitleError
+from app.todos.infrastructure.in_memory_repository import InMemoryTodoRepository
 
 
 class StaticTodoIdGenerator:

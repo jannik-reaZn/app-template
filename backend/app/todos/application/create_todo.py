@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import Protocol
 
 from app.core import Result
-from app.domain.todos.entities import Todo
-from app.domain.todos.errors import DomainError
-from app.domain.todos.repositories import TodoRepository
+from app.todos.domain.entities import Todo
+from app.todos.domain.errors import DomainError
+from app.todos.domain.repositories import TodoRepository
 
 
 class TodoIdGenerator(Protocol):
