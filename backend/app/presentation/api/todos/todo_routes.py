@@ -7,7 +7,8 @@ from app.todos.infrastructure.in_memory_repository import (
     InMemoryTodoRepository,
     SequentialTodoIdGenerator,
 )
-from app.presentation.api.schemas import CreateTodoRequest, TodoResponse
+from app.presentation.api.todos.create_todo_request import CreateTodoRequest
+from app.presentation.api.todos.todo_response import TodoResponse
 
 router = APIRouter()
 
