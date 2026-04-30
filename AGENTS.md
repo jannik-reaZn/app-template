@@ -2,6 +2,13 @@
 
 Full-stack template: **Python 3.14 FastMCP/FastAPI backend** + **Vue 3 + Vite + TypeScript frontend**.
 
+## Testing
+
+```bash
+cd backend
+uv run pytest
+```
+
 ## Architecture
 
 | Layer      | Path                | Tech                                    |
