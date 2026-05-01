@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core import DomainError, Result
@@ -15,12 +16,21 @@ class SqliteTodoRepository(TodoRepository):
         self.session: Session = session.session
 
     def get_by_id(self, todo_id: str) -> Result[Todo, DomainError]:
-        todo_record = self.session.get(TodoRecord, todo_id)
+        statement = select(TodoRecord).where(TodoRecord.todo_id == todo_id)
+        todo_record = self.session.scalar(statement)
         if todo_record is None:
             return Result.err(TodoNotFoundError(todo_id))
         return Result.ok(todo_record.to_domain())
 
     def save(self, todo: Todo) -> Result[Todo, DomainError]:
-        self.session.merge(TodoRecord.from_domain(todo))
+        statement = select(TodoRecord).where(TodoRecord.todo_id == todo.id)
+        todo_record = self.session.scalar(statement)
+
+        if todo_record is None:
+            self.session.add(TodoRecord.from_domain(todo))
+        else:
+            todo_record.title = todo.title.value
+            todo_record.status = todo.status
+
         self.session.commit()
         return Result.ok(todo)

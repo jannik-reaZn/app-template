@@ -13,7 +13,8 @@ class TestTodoRecord:
         record: TodoRecord = TodoRecord.from_domain(todo)
 
         # THEN
-        assert record.id == todo.id
+        assert record.record_id is None
+        assert record.todo_id == todo.id
         assert record.title == todo.title.value
         assert record.status == todo.status
 
@@ -25,6 +26,6 @@ class TestTodoRecord:
         todo: Todo = record.to_domain()
 
         # THEN
-        assert todo.id == record.id
+        assert todo.id == record.todo_id
         assert todo.title.value == record.title
         assert todo.status == record.status
