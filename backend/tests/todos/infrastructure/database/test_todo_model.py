@@ -14,7 +14,7 @@ class TestTodoRecord:
 
         # THEN
         assert record.id == todo.id
-        assert record.title == todo.title
+        assert record.title == todo.title.value
         assert record.status == todo.status
 
     def test_to_domain_maps_record_fields_to_domain(self) -> None:
@@ -26,5 +26,5 @@ class TestTodoRecord:
 
         # THEN
         assert todo.id == record.id
-        assert todo.title == record.title
+        assert todo.title.value == record.title
         assert todo.status == record.status

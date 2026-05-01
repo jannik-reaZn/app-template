@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database.base_model import Base
 from app.todos.domain.entities.todo_entity import Todo, TodoStatus
+from app.todos.domain.value_objects.todo_title import TodoTitle
 
 
 class TodoRecord(Base):
@@ -16,11 +17,11 @@ class TodoRecord(Base):
 
     @classmethod
     def from_domain(cls, todo: Todo) -> TodoRecord:
-        return cls(id=todo.id, title=todo.title, status=todo.status)
+        return cls(id=todo.id, title=todo.title.value, status=todo.status)
 
     def to_domain(self) -> Todo:
         return Todo(
             id=self.id,
-            title=self.title,
+            title=TodoTitle(value=self.title),
             status=TodoStatus(self.status),
         )

@@ -27,7 +27,9 @@ def create_todo(
     if result.is_err:
         raise result.error
     return TodoResponse(
-        id=result.value.id, title=result.value.title, status=result.value.status
+        id=result.value.id,
+        title=result.value.title.value,
+        status=result.value.status,
     )
 
 
@@ -45,6 +47,6 @@ def get_todo(
         raise result.error
     return TodoResponse(
         id=result.value.id,
-        title=result.value.title,
+        title=result.value.title.value,
         status=result.value.status,
     )

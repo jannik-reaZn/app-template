@@ -21,7 +21,7 @@ class TestCreateTodoUseCase:
 
     def test_returns_pending_todo(self) -> None:
         # GIVEN
-        title: str = self.todo.title
+        title: str = self.todo.title.value
         pending: TodoStatus = self.todo.status
 
         # WHEN
@@ -32,7 +32,7 @@ class TestCreateTodoUseCase:
         # THEN
         assert todo.is_ok is True
         assert UUID(todo.value.id)
-        assert todo.value.title == title
+        assert todo.value.title.value == title
         assert todo.value.status == "pending"
 
     def test_returns_error_for_blank_title(self) -> None:
