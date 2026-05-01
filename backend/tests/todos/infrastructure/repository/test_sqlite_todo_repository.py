@@ -36,6 +36,9 @@ class TestSqliteTodoRepository:
         assert record is not None
         assert record.record_id is not None
         assert record.todo_id == todo.id
+        assert record.created_at is not None
+        assert record.updated_at is not None
+        assert record.updated_by == "Sytem"
 
     def test_get_by_id_returns_not_found_error_for_missing_todo(
         self,
