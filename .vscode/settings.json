@@ -62,5 +62,6 @@
   "python.testing.cwd": "/workspaces/app-template/backend",
   "python.testing.pytestArgs": ["tests"],
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true
+  "python.testing.pytestEnabled": true,
+  "editor.tabSize": 4
 }
