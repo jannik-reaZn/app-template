@@ -8,12 +8,18 @@ from fastapi import Depends
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.todo_repository import TodoRepository
-from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
+from app.todos.infrastructure.todo_repository import SqliteSession, SqliteTodoRepository
 
 
 @lru_cache
-def get_todo_repository() -> TodoRepository:
-    return InMemoryTodoRepository()
+def get_sqlite_session() -> SqliteSession:
+    return SqliteSession()
+
+
+def get_todo_repository(
+    session: Annotated[SqliteSession, Depends(get_sqlite_session)],
+) -> TodoRepository:
+    return SqliteTodoRepository(session)
 
 
 def get_create_todo_use_case(
