@@ -5,7 +5,7 @@ from typing import Literal
 from pydantic import Field
 
 from app.core import DomainError, DomainModel, Result
-from app.todos.domain.errors import EmptyTodoTitleError
+from app.todos.domain.todo_errors import EmptyTodoTitleError
 
 TodoStatus = Literal["pending", "completed"]
 

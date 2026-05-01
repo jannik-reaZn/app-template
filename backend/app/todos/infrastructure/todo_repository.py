@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from app.core import DomainError, Result
 from app.todos.domain.entities import Todo
-from app.todos.domain.errors import TodoNotFoundError
+from app.todos.domain.todo_errors import TodoNotFoundError
 
 
 class InMemoryTodoRepository:

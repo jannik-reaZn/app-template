@@ -1,7 +1,7 @@
 import pytest
 
 from app.todos.application.get_todo_use_case import GetTodoUseCase
-from app.todos.domain.errors import TodoNotFoundError
+from app.todos.domain.todo_errors import TodoNotFoundError
 from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
 from tests.factory.todo_factory import TodoFactory
 

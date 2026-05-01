@@ -1,7 +1,7 @@
 import pytest
 
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
-from app.todos.domain.errors import EmptyTodoTitleError
+from app.todos.domain.todo_errors import EmptyTodoTitleError
 
 
 class TestCreateTodoUseCase:
