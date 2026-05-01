@@ -6,17 +6,23 @@ from app.core import DomainError, Result
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
 from app.todos.domain.todo_entity import Todo, TodoStatus
 from app.todos.domain.todo_errors import EmptyTodoTitleError
+from tests.factory.todo_factory import TodoFactory
 
 
 class TestCreateTodoUseCase:
     @pytest.fixture(autouse=True)
-    def setup(self, create_todo_use_case: CreateTodoUseCase) -> None:
+    def setup(
+        self,
+        create_todo_use_case: CreateTodoUseCase,
+        todo_factory: TodoFactory,
+    ) -> None:
         self.create_todo_use_case = create_todo_use_case
+        self.todo: Todo = todo_factory.build(status=TodoStatus.PENDING)
 
     def test_returns_pending_todo(self) -> None:
         # GIVEN
-        title: str = "Pay electricity bill"
-        pending: TodoStatus = TodoStatus.PENDING
+        title: str = self.todo.title
+        pending: TodoStatus = self.todo.status
 
         # WHEN
         todo: Result[Todo, DomainError] = self.create_todo_use_case(
