@@ -1,7 +1,7 @@
 import pytest
 
 from app.core.database.sqlite import SqliteSession
-from app.todos.domain.todo_errors import TodoNotFoundError
+from app.todos.domain.errors.todo_errors import TodoNotFoundError
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
     SqliteTodoRepository,
 )

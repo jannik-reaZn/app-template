@@ -4,8 +4,8 @@ import pytest
 
 from app.core import DomainError, Result
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
+from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
 from app.todos.domain.todo_entity import Todo, TodoStatus
-from app.todos.domain.todo_errors import EmptyTodoTitleError
 from tests.factory.todo_factory import TodoFactory
 
 

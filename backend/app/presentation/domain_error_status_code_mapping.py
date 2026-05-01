@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from app.core import DomainError
-from app.todos.domain.todo_errors import EmptyTodoTitleError, TodoNotFoundError
+from app.todos.domain.errors.todo_errors import EmptyTodoTitleError, TodoNotFoundError
 
 type DomainErrorType = type[DomainError]
 
