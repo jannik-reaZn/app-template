@@ -1,7 +1,7 @@
 import pytest
 
+from app.todos.domain.entities.todo_entity import Todo
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
-from app.todos.domain.todo_entity import Todo
 from app.todos.infrastructure.repository.in_memory_todo_repository import (
     InMemoryTodoRepository,
 )

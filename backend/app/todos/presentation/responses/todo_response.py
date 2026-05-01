@@ -1,5 +1,5 @@
 from app.core import BaseSchema
-from app.todos.domain.todo_entity import TodoStatus
+from app.todos.domain.entities.todo_entity import TodoStatus
 
 
 class TodoResponse(BaseSchema):

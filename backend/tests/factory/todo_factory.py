@@ -1,7 +1,7 @@
 from polyfactory.factories.pydantic_factory import ModelFactory
 from polyfactory.pytest_plugin import register_fixture
 
-from app.todos.domain.todo_entity import Todo
+from app.todos.domain.entities.todo_entity import Todo
 
 
 @register_fixture

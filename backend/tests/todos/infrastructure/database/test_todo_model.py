@@ -1,4 +1,4 @@
-from app.todos.domain.todo_entity import Todo
+from app.todos.domain.entities.todo_entity import Todo
 from app.todos.infrastructure.database.todo_model import TodoRecord
 from tests.factory.todo_factory import TodoFactory
 from tests.factory.todo_record_factory import TodoRecordFactory
