@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
 from app.core import DomainError
-from app.todos.presentation.domain_error_statuses import get_domain_error_status
+from app.presentation.domain_error_statuses import get_domain_error_status
 
 
 async def handle_domain_error(
