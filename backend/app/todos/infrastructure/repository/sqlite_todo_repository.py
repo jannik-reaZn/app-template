@@ -4,8 +4,8 @@ from app.core import DomainError, Result
 from app.todos.domain.todo_entity import Todo
 from app.todos.domain.todo_errors import TodoNotFoundError
 from app.todos.domain.todo_repository import TodoRepository
-from app.todos.infrastructure.database.models import TodoRecord
 from app.todos.infrastructure.database.session import SqliteSession
+from app.todos.infrastructure.database.todo_model import TodoRecord
 
 
 class SqliteTodoRepository(TodoRepository):

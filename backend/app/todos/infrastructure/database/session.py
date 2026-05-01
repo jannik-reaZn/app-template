@@ -5,7 +5,7 @@ from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.todos.infrastructure.database.models import Base
+from app.todos.infrastructure.database.todo_model import Base
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_TODO_DB_PATH = WORKSPACE_ROOT / "todos.db"
