@@ -3,7 +3,7 @@ from __future__ import annotations
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core.base_model import Base
+from app.core.database.base_model import Base
 from app.todos.domain.todo_entity import Todo, TodoStatus
 
 
