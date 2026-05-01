@@ -30,3 +30,7 @@ build/
 *.swp
 *.swo
 .DS_Store
+
+# Database
+*.db
+*.sqlite
