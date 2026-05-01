@@ -1,7 +1,8 @@
 from app.core import BaseSchema
+from app.todos.domain.todo_entity import TodoStatus
 
 
 class TodoResponse(BaseSchema):
     id: str
     title: str
-    status: str
+    status: TodoStatus
