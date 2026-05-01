@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi.testclient import TestClient
 
 from main import app
@@ -9,8 +11,11 @@ def test_post_todos_creates_pending_todo() -> None:
     response = client.post("/api/todos", json={"title": "Pay electricity bill"})
 
     assert response.status_code == 201
-    assert response.json() == {
-        "id": "todo-1",
+    response_body = response.json()
+
+    assert UUID(response_body["id"])
+    assert response_body == {
+        "id": response_body["id"],
         "title": "Pay electricity bill",
         "status": "pending",
     }

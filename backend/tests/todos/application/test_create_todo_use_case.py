@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import pytest
 
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
@@ -13,7 +15,7 @@ class TestCreateTodoUseCase:
         result = self.create_todo_use_case.execute(title="Pay electricity bill")
 
         assert result.is_ok is True
-        assert result.value.id == "todo-123"
+        assert UUID(result.value.id)
         assert result.value.title == "Pay electricity bill"
         assert result.value.status == "pending"
 

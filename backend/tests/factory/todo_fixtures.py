@@ -5,11 +5,6 @@ from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
 
 
-class StaticTodoIdGenerator:
-    def new(self) -> str:
-        return "todo-123"
-
-
 @pytest.fixture
 def todo_repository() -> InMemoryTodoRepository:
     return InMemoryTodoRepository()
@@ -17,7 +12,7 @@ def todo_repository() -> InMemoryTodoRepository:
 
 @pytest.fixture
 def create_todo_use_case() -> CreateTodoUseCase:
-    return CreateTodoUseCase(InMemoryTodoRepository(), StaticTodoIdGenerator())
+    return CreateTodoUseCase(InMemoryTodoRepository())
 
 
 @pytest.fixture
