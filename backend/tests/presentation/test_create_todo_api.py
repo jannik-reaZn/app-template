@@ -8,8 +8,13 @@ client = TestClient(app)
 
 
 def test_post_todos_creates_pending_todo() -> None:
-    response = client.post("/api/todos", json={"title": "Pay electricity bill"})
+    # GIVEN
+    payload: dict[str, str] = {"title": "Pay electricity bill"}
 
+    # WHEN
+    response = client.post("/api/todos", json=payload)
+
+    # THEN
     assert response.status_code == 201
     response_body = response.json()
 
@@ -22,7 +27,12 @@ def test_post_todos_creates_pending_todo() -> None:
 
 
 def test_post_todos_rejects_blank_title() -> None:
-    response = client.post("/api/todos", json={"title": "   "})
+    # GIVEN
+    payload: dict[str, str] = {"title": "   "}
 
+    # WHEN
+    response = client.post("/api/todos", json=payload)
+
+    # THEN
     assert response.status_code == 400
     assert response.json() == {"detail": "Todo title cannot be empty"}
