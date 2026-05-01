@@ -1,10 +1,8 @@
-from collections.abc import Iterator
-
 import pytest
 
+from app.core.database.sqlite import SqliteSession
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.get_todo_use_case import GetTodoUseCase
-from app.todos.infrastructure.database import SqliteSession
 from app.todos.infrastructure.repository import (
     InMemoryTodoRepository,
     SqliteTodoRepository,
@@ -14,13 +12,6 @@ from app.todos.infrastructure.repository import (
 @pytest.fixture
 def todo_in_memory_repository() -> InMemoryTodoRepository:
     return InMemoryTodoRepository()
-
-
-@pytest.fixture
-def sqlite_session() -> Iterator[SqliteSession]:
-    session = SqliteSession(":memory:")
-    yield session
-    session.close()
 
 
 @pytest.fixture

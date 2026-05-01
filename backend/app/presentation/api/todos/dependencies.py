@@ -5,16 +5,21 @@ from typing import Annotated
 
 from fastapi import Depends
 
+from app.core.database.sqlite import SqliteSession
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.todo_repository import TodoRepository
-from app.todos.infrastructure.database import SqliteSession
+from app.todos.infrastructure.database import Base
 from app.todos.infrastructure.repository import SqliteTodoRepository
+from settings import settings
 
 
 @lru_cache
 def get_sqlite_session() -> SqliteSession:
-    return SqliteSession()
+    return SqliteSession(
+        metadata=Base.metadata,
+        database_path=settings.database.todo_db_path,
+    )
 
 
 def get_todo_repository(

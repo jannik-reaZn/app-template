@@ -2,18 +2,20 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from app.core.database import DatabaseSession
-from app.todos.infrastructure.database.todo_model import Base
+from sqlalchemy import MetaData
+
+from app.core.database.database import DatabaseSession
 from settings import settings
 
 
 class SqliteSession(DatabaseSession):
     def __init__(
         self,
+        metadata: MetaData,
         database_path: str | Path = settings.database.todo_db_path,
     ) -> None:
         super().__init__(
-            metadata=Base.metadata,
+            metadata=metadata,
             database_url=self._build_database_url(database_path),
             connect_args=settings.database.connect_args,
         )

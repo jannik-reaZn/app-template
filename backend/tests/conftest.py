@@ -1,12 +1,24 @@
+from collections.abc import Iterator
+
+import pytest
 from polyfactory.pytest_plugin import register_fixture
 
+from app.core.database.sqlite import SqliteSession
+from app.todos.infrastructure.database import Base
 from tests.factory.todo_factory import TodoFactory
 from tests.factory.todo_fixtures import (  # noqa: F401
     create_todo_use_case,
     get_todo_use_case,
-    sqlite_session,
     todo_in_memory_repository,
     todo_repository,
 )
+
+
+@pytest.fixture
+def sqlite_session() -> Iterator[SqliteSession]:
+    session = SqliteSession(metadata=Base.metadata, database_path=":memory:")
+    yield session
+    session.close()
+
 
 register_fixture(TodoFactory)
