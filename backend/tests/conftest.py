@@ -5,6 +5,7 @@ from polyfactory.pytest_plugin import register_fixture
 
 from app.core.database.base_model import Base
 from app.core.database.sqlite import SqliteSession
+from tests.factory.create_todo_request_factory import CreateTodoRequestFactory
 from tests.factory.todo_factory import TodoFactory
 from tests.factory.todo_fixtures import (  # noqa: F401
     create_todo_use_case,
@@ -22,5 +23,6 @@ def sqlite_session() -> Iterator[SqliteSession]:
     session.close()
 
 
+register_fixture(CreateTodoRequestFactory)
 register_fixture(TodoFactory)
 register_fixture(TodoRecordFactory)
