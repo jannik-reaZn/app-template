@@ -4,7 +4,8 @@ from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database.base_model import Base
-from app.todos.domain.entities.todo_entity import Todo, TodoStatus
+from app.todos.domain.entities.todo_entity import Todo
+from app.todos.domain.enum.todo_status import TodoStatus
 from app.todos.domain.value_objects.todo_title import TodoTitle
 
 
