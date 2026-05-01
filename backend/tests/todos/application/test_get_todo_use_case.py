@@ -21,7 +21,7 @@ class TestGetTodoUseCase:
     def test_returns_existing_todo(self) -> None:
         self.todo_repository.save(self.todo)
 
-        result = self.get_todo_use_case.execute(self.todo.id)
+        result = self.get_todo_use_case(self.todo.id)
 
         assert result.is_ok is True
         assert result.value.id == self.todo.id
@@ -29,7 +29,7 @@ class TestGetTodoUseCase:
         assert result.value.status == self.todo.status
 
     def test_returns_not_found_error(self) -> None:
-        result = self.get_todo_use_case.execute("missing-todo")
+        result = self.get_todo_use_case("missing-todo")
 
         assert result.is_err is True
         assert isinstance(result.error, TodoNotFoundError)

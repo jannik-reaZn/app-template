@@ -12,7 +12,7 @@ class TestCreateTodoUseCase:
         self.create_todo_use_case = create_todo_use_case
 
     def test_returns_pending_todo(self) -> None:
-        result = self.create_todo_use_case.execute(title="Pay electricity bill")
+        result = self.create_todo_use_case(title="Pay electricity bill")
 
         assert result.is_ok is True
         assert UUID(result.value.id)
@@ -20,7 +20,7 @@ class TestCreateTodoUseCase:
         assert result.value.status == "pending"
 
     def test_returns_error_for_blank_title(self) -> None:
-        result = self.create_todo_use_case.execute(title="   ")
+        result = self.create_todo_use_case(title="   ")
 
         assert result.is_err is True
         assert isinstance(result.error, EmptyTodoTitleError)

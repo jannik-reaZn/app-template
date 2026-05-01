@@ -27,7 +27,7 @@ def create_todo(
         CreateTodoUseCase, Depends(get_create_todo_use_case)
     ],
 ) -> TodoResponse:
-    result = create_todo_use_case.execute(title=request.title)
+    result = create_todo_use_case(title=request.title)
     if result.is_err:
         raise result.error
     return TodoResponse(
@@ -42,7 +42,7 @@ def get_todo(
     todo_id: str,
     get_todo_use_case: Annotated[GetTodoUseCase, Depends(get_get_todo_use_case)],
 ) -> TodoResponse:
-    result = get_todo_use_case.execute(todo_id)
+    result = get_todo_use_case(todo_id)
     if result.is_err:
         raise result.error
     return TodoResponse(
