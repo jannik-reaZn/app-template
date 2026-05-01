@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from app.core import DomainError
-from app.presentation.domain_error_status_code_mapping import DOMAIN_ERROR_STATUS_CODES
+from app.todos.presentation.domain_error_status_code_mapping import (
+    DOMAIN_ERROR_STATUS_CODES,
+)
 
 DEFAULT_DOMAIN_ERROR_STATUS_CODE = 400
 
