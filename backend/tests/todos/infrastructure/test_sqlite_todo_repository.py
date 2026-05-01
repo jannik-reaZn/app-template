@@ -1,6 +1,7 @@
 from app.todos.domain.todo_entity import Todo
 from app.todos.domain.todo_errors import TodoNotFoundError
-from app.todos.infrastructure.todo_repository import SqliteSession, SqliteTodoRepository
+from app.todos.infrastructure.database import SqliteSession
+from app.todos.infrastructure.repository import SqliteTodoRepository
 
 
 class TestSqliteTodoRepository:
