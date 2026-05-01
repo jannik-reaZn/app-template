@@ -10,7 +10,7 @@ from app.todos.application.create_todo_use_case import (
     TodoIdGenerator,
 )
 from app.todos.application.get_todo_use_case import GetTodoUseCase
-from app.todos.domain.repositories import TodoRepository
+from app.todos.domain.todo_repository import TodoRepository
 from app.todos.infrastructure.todo_id_generator import SequentialTodoIdGenerator
 from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
 

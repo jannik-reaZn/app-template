@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from app.core import DomainError, Result
 from app.todos.domain.entities import Todo
-from app.todos.domain.repositories import TodoRepository
+from app.todos.domain.todo_repository import TodoRepository
 
 
 class GetTodoUseCase:

@@ -4,7 +4,7 @@ from typing import Protocol
 
 from app.core import DomainError, Result
 from app.todos.domain.entities import Todo
-from app.todos.domain.repositories import TodoRepository
+from app.todos.domain.todo_repository import TodoRepository
 
 
 class TodoIdGenerator(Protocol):
