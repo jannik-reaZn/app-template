@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from app.core import DomainError, Result
+from app.todos.domain.interfaces.todo_repository import TodoRepository
 from app.todos.domain.todo_entity import Todo, TodoStatus
-from app.todos.domain.todo_repository import TodoRepository
 
 
 class CreateTodoUseCase:

@@ -9,7 +9,7 @@ from app.core.database.base_model import Base
 from app.core.database.sqlite import SqliteSession
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
-from app.todos.domain.todo_repository import TodoRepository
+from app.todos.domain.interfaces.todo_repository import TodoRepository
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
     SqliteTodoRepository,
 )
