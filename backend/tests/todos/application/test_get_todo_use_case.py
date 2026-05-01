@@ -1,7 +1,7 @@
 import pytest
 
 from app.core import DomainError, Result
-from app.todos.application.get_todo_use_case import GetTodoUseCase
+from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.todo_entity import Todo
 from app.todos.domain.todo_errors import TodoNotFoundError
 from app.todos.domain.todo_repository import TodoRepository

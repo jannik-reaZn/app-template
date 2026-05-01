@@ -4,8 +4,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
 
-from app.todos.application.create_todo_use_case import CreateTodoUseCase
-from app.todos.application.get_todo_use_case import GetTodoUseCase
+from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
+from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.presentation.dependencies.todo_dependencies import (
     get_create_todo_use_case,
     get_get_todo_use_case,
