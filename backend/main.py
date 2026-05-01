@@ -2,7 +2,8 @@ from fastapi import FastAPI
 
 from app.presentation.api.todos.todo_api import router as todo_router
 from app.presentation.exception_handlers import register_exception_handlers
+from settings import settings
 
-app = FastAPI()
+app = FastAPI(title=settings.app.title)
 register_exception_handlers(app)
-app.include_router(todo_router, prefix="/api")
+app.include_router(todo_router, prefix=settings.app.api_prefix)
