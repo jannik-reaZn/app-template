@@ -34,7 +34,7 @@ class TestSqliteTodoRepository:
         )
 
         assert record is not None
-        assert record.record_id is not None
+        assert record.id is not None
         assert record.todo_id == todo.id
         assert record.created_at is not None
         assert record.updated_at is not None
