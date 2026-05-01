@@ -5,7 +5,9 @@ from app.todos.application.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.todo_entity import Todo
 from app.todos.domain.todo_errors import TodoNotFoundError
 from app.todos.domain.todo_repository import TodoRepository
-from app.todos.infrastructure.repository import SqliteTodoRepository
+from app.todos.infrastructure.repository.sqlite_todo_repository import (
+    SqliteTodoRepository,
+)
 from tests.factory.todo_factory import TodoFactory
 
 
