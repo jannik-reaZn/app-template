@@ -6,7 +6,7 @@ from app.todos.infrastructure.todo_repository import InMemoryTodoRepository
 
 
 @pytest.fixture
-def todo_repository() -> InMemoryTodoRepository:
+def todo_in_memory_repository() -> InMemoryTodoRepository:
     return InMemoryTodoRepository()
 
 
@@ -16,5 +16,7 @@ def create_todo_use_case() -> CreateTodoUseCase:
 
 
 @pytest.fixture
-def get_todo_use_case(todo_repository: InMemoryTodoRepository) -> GetTodoUseCase:
-    return GetTodoUseCase(todo_repository)
+def get_todo_use_case(
+    todo_in_memory_repository: InMemoryTodoRepository,
+) -> GetTodoUseCase:
+    return GetTodoUseCase(todo_in_memory_repository)

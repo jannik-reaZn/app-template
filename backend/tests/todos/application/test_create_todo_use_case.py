@@ -2,7 +2,9 @@ from uuid import UUID
 
 import pytest
 
+from app.core import DomainError, Result
 from app.todos.application.create_todo_use_case import CreateTodoUseCase
+from app.todos.domain.todo_entity import Todo, TodoStatus
 from app.todos.domain.todo_errors import EmptyTodoTitleError
 
 
@@ -12,15 +14,28 @@ class TestCreateTodoUseCase:
         self.create_todo_use_case = create_todo_use_case
 
     def test_returns_pending_todo(self) -> None:
-        result = self.create_todo_use_case(title="Pay electricity bill")
+        # GIVEN
+        title: str = "Pay electricity bill"
+        pending: TodoStatus = TodoStatus.PENDING
 
-        assert result.is_ok is True
-        assert UUID(result.value.id)
-        assert result.value.title == "Pay electricity bill"
-        assert result.value.status == "pending"
+        # WHEN
+        todo: Result[Todo, DomainError] = self.create_todo_use_case(
+            title=title, status=pending
+        )
+
+        # THEN
+        assert todo.is_ok is True
+        assert UUID(todo.value.id)
+        assert todo.value.title == title
+        assert todo.value.status == "pending"
 
     def test_returns_error_for_blank_title(self) -> None:
-        result = self.create_todo_use_case(title="   ")
+        # GIVEN
+        title: str = "   "
 
-        assert result.is_err is True
-        assert isinstance(result.error, EmptyTodoTitleError)
+        # WHEN
+        todo: Result[Todo, DomainError] = self.create_todo_use_case(title=title)
+
+        # THEN
+        assert todo.is_err is True
+        assert isinstance(todo.error, EmptyTodoTitleError)

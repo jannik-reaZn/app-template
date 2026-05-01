@@ -4,7 +4,7 @@ from tests.factory.todo_factory import TodoFactory
 from tests.factory.todo_fixtures import (  # noqa: F401
     create_todo_use_case,
     get_todo_use_case,
-    todo_repository,
+    todo_in_memory_repository,
 )
 
 register_fixture(TodoFactory)

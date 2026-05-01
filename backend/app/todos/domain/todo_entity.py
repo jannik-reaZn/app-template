@@ -34,8 +34,10 @@ class Todo(DomainModel):
     )
 
     @classmethod
-    def create(cls, title: str) -> Result[Todo, DomainError]:
+    def create(
+        cls, title: str, status: TodoStatus = TodoStatus.PENDING
+    ) -> Result[Todo, DomainError]:
         normalized_title: str = title.strip()
         if not normalized_title:
             return Result.err(EmptyTodoTitleError())
-        return Result.ok(cls(title=normalized_title))
+        return Result.ok(cls(title=normalized_title, status=status))
