@@ -12,6 +12,7 @@ from tests.factory.todo_fixtures import (  # noqa: F401
     todo_in_memory_repository,
     todo_repository,
 )
+from tests.factory.todo_record_factory import TodoRecordFactory
 
 
 @pytest.fixture
@@ -22,3 +23,4 @@ def sqlite_session() -> Iterator[SqliteSession]:
 
 
 register_fixture(TodoFactory)
+register_fixture(TodoRecordFactory)
