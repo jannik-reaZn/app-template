@@ -21,6 +21,6 @@ class SqliteTodoRepository(TodoRepository):
         return Result.ok(todo_record.to_domain())
 
     def save(self, todo: Todo) -> Result[Todo, DomainError]:
-        self.session.merge(TodoRecord(id=todo.id, title=todo.title, status=todo.status))
+        self.session.merge(TodoRecord.from_domain(todo))
         self.session.commit()
         return Result.ok(todo)

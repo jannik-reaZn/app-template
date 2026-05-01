@@ -14,6 +14,10 @@ class TodoRecord(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     status: Mapped[str] = mapped_column(String(255), nullable=False)
 
+    @classmethod
+    def from_domain(cls, todo: Todo) -> TodoRecord:
+        return cls(id=todo.id, title=todo.title, status=todo.status)
+
     def to_domain(self) -> Todo:
         return Todo(
             id=self.id,
