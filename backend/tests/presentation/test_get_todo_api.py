@@ -1,14 +1,15 @@
 from fastapi.testclient import TestClient
 
 from main import app
+from tests.factory.create_todo_request_factory import CreateTodoRequestFactory
 
 client = TestClient(app)
 
 
 def test_get_todo_returns_existing_todo() -> None:
     # GIVEN
-    payload: dict[str, str] = {"title": "Pay electricity bill"}
-    created_response = client.post("/api/todos", json=payload)
+    payload = CreateTodoRequestFactory.build()
+    created_response = client.post("/api/todos", json=payload.model_dump())
 
     # WHEN
     todo_id = created_response.json()["id"]
@@ -18,7 +19,7 @@ def test_get_todo_returns_existing_todo() -> None:
     assert response.status_code == 200
     assert response.json() == {
         "id": todo_id,
-        "title": "Pay electricity bill",
+        "title": payload.title,
         "status": "pending",
     }
 
