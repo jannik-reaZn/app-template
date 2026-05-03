@@ -21,6 +21,16 @@ All slices are backend-only and assume no FastMCP layer.
    **Blocked by**: Issue 2
    **User stories covered**: As a user, I want to mark a todo item as completed.
 
+4. **Title**: Add delete-todo vertical slice
+   **Type**: AFK
+   **Blocked by**: Issue 2
+   **User stories covered**: As a user, I want to delete a todo item that is no longer relevant.
+
+5. **Title**: Finalize delete-todo product contract
+   **Type**: AFK
+   **Blocked by**: Issue 4
+   **User stories covered**: Ensure delete behavior is clearly defined and consistent for API consumers.
+
 ## Issue Draft 1
 
 Title: Add create-todo vertical slice
@@ -80,3 +90,43 @@ Implement completion of an existing todo through the API. The slice should load 
 ## Blocked by
 
 - Issue 2: Add get-todo vertical slice
+
+## Issue Draft 4
+
+Title: Add delete-todo vertical slice
+
+Labels: `needs-triage`
+
+## What to build
+
+Implement deletion of an existing todo through the API as a thin end-to-end backend slice. The slice should let clients remove a todo by id, return a clean response when the id does not exist, and ensure the deleted todo is no longer available through the standard read flow.
+
+## Acceptance criteria
+
+- [ ] `DELETE /api/todos/{todo_id}` deletes an existing todo successfully.
+- [ ] Deleting a missing todo returns `404 Not Found` through the existing error-handling approach.
+- [ ] A todo that has been deleted is no longer returned by `GET /api/todos/{todo_id}`.
+
+## Blocked by
+
+- Issue 2: Add get-todo vertical slice
+
+## Issue Draft 5
+
+Title: Finalize delete-todo product contract
+
+Labels: `needs-triage`
+
+## What to build
+
+Finalize the product-facing contract for the delete-todo capability so API consumers and future contributors have a clear, stable definition of how deletion behaves. This issue should align the feature request, PRD, and delivery expectations around success behavior, missing-resource handling, and the expected post-delete user experience.
+
+## Acceptance criteria
+
+- [ ] The delete-todo behavior is documented clearly enough that API consumers can understand the expected success and not-found outcomes.
+- [ ] The defined delete behavior matches the product requirements and accepted feature scope.
+- [ ] The delete capability is described as part of the supported todo lifecycle.
+
+## Blocked by
+
+- Issue 4: Add delete-todo vertical slice
