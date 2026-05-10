@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from app.core import DomainError, Result
 from app.todos.domain.entities.todo_entity import Todo
-from app.todos.domain.enum.todo_status import TodoStatus
+from app.todos.domain.enums.todo_status import TodoStatus
 from app.todos.domain.interfaces.todo_repository import TodoRepository
 
 

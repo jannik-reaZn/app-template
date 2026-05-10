@@ -5,7 +5,7 @@ from uuid import uuid4
 from pydantic import Field
 
 from app.core import DomainError, DomainModel, Result
-from app.todos.domain.enum.todo_status import TodoStatus
+from app.todos.domain.enums.todo_status import TodoStatus
 from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
 from app.todos.domain.value_objects.todo_title import TodoTitle
 
