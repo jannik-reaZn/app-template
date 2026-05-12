@@ -9,9 +9,11 @@ from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.presentation.dependencies.todo_dependencies import (
     get_create_todo_use_case,
     get_get_todo_use_case,
+    get_todo_presenter,
 )
 from app.todos.presentation.requests.create_todo_request import CreateTodoRequest
 from app.todos.presentation.responses.todo_response import TodoResponse
+from app.todos.presentation.todo_presenter import TodoPresenter
 
 router = APIRouter(tags=["todos"])
 
@@ -22,15 +24,9 @@ def create_todo(
     create_todo_use_case: Annotated[
         CreateTodoUseCase, Depends(get_create_todo_use_case)
     ],
+    todo_presenter: Annotated[TodoPresenter, Depends(get_todo_presenter)],
 ) -> TodoResponse:
-    result = create_todo_use_case(title=request.title)
-    if result.is_err:
-        raise result.error
-    return TodoResponse(
-        id=result.value.id,
-        title=result.value.title.value,
-        status=result.value.status,
-    )
+    return todo_presenter.present(create_todo_use_case(title=request.title))
 
 
 @router.get(
@@ -41,12 +37,6 @@ def create_todo(
 def get_todo(
     todo_id: str,
     get_todo_use_case: Annotated[GetTodoUseCase, Depends(get_get_todo_use_case)],
+    todo_presenter: Annotated[TodoPresenter, Depends(get_todo_presenter)],
 ) -> TodoResponse:
-    result = get_todo_use_case(todo_id)
-    if result.is_err:
-        raise result.error
-    return TodoResponse(
-        id=result.value.id,
-        title=result.value.title.value,
-        status=result.value.status,
-    )
+    return todo_presenter.present(get_todo_use_case(todo_id))

@@ -13,6 +13,7 @@ from app.todos.domain.interfaces.todo_repository_port import TodoRepositoryPort
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
     SqliteTodoRepository,
 )
+from app.todos.presentation.todo_presenter import TodoPresenter
 from settings import settings
 
 
@@ -40,3 +41,7 @@ def get_get_todo_use_case(
     todo_repository: Annotated[TodoRepositoryPort, Depends(get_todo_repository)],
 ) -> GetTodoUseCase:
     return GetTodoUseCase(todo_repository)
+
+
+def get_todo_presenter() -> TodoPresenter:
+    return TodoPresenter()
