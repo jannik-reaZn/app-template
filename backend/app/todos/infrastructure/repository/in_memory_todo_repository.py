@@ -3,10 +3,10 @@ from __future__ import annotations
 from app.core import DomainError, Result
 from app.todos.domain.entities.todo_entity import Todo
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
-from app.todos.domain.interfaces.todo_repository import TodoRepository
+from app.todos.domain.interfaces.todo_repository import TodoRepositoryPort
 
 
-class InMemoryTodoRepository(TodoRepository):
+class InMemoryTodoRepository(TodoRepositoryPort):
     def __init__(self) -> None:
         self.items: dict[str, Todo] = {}
 

@@ -9,7 +9,7 @@ from app.core.database.base_model import Base
 from app.core.database.sqlite import SqliteSession
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
-from app.todos.domain.interfaces.todo_repository import TodoRepository
+from app.todos.domain.interfaces.todo_repository import TodoRepositoryPort
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
     SqliteTodoRepository,
 )
@@ -26,17 +26,17 @@ def get_sqlite_session() -> SqliteSession:
 
 def get_todo_repository(
     session: Annotated[SqliteSession, Depends(get_sqlite_session)],
-) -> TodoRepository:
+) -> TodoRepositoryPort:
     return SqliteTodoRepository(session)
 
 
 def get_create_todo_use_case(
-    todo_repository: Annotated[TodoRepository, Depends(get_todo_repository)],
+    todo_repository: Annotated[TodoRepositoryPort, Depends(get_todo_repository)],
 ) -> CreateTodoUseCase:
     return CreateTodoUseCase(todo_repository)
 
 
 def get_get_todo_use_case(
-    todo_repository: Annotated[TodoRepository, Depends(get_todo_repository)],
+    todo_repository: Annotated[TodoRepositoryPort, Depends(get_todo_repository)],
 ) -> GetTodoUseCase:
     return GetTodoUseCase(todo_repository)
