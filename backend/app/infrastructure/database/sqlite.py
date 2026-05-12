@@ -4,7 +4,7 @@ from pathlib import Path
 
 from sqlalchemy import MetaData
 
-from app.core.database.database import DatabaseSession
+from app.infrastructure.database.database import DatabaseSession
 from settings import settings
 
 

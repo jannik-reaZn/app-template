@@ -1,6 +1,6 @@
 import pytest
 
-from app.core.database.sqlite import SqliteSession
+from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.infrastructure.repository.in_memory_todo_repository import (

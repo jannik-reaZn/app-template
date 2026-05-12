@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy import select
 
-from app.core.database.sqlite import SqliteSession
+from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
 from app.todos.infrastructure.database.todo_model import TodoRecord
 from app.todos.infrastructure.repository.sqlite_todo_repository import (

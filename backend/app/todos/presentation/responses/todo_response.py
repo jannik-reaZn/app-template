@@ -1,4 +1,4 @@
-from app.core import BaseSchema
+from app.presentation.base_schema import BaseSchema
 from app.todos.domain.enums.todo_status import TodoStatus
 
 

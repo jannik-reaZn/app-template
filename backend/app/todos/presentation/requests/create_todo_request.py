@@ -1,4 +1,4 @@
-from app.core import BaseSchema
+from app.presentation.base_schema import BaseSchema
 
 
 class CreateTodoRequest(BaseSchema):

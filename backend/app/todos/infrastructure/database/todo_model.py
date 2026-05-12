@@ -3,7 +3,7 @@ from __future__ import annotations
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core.database.base_model import Base
+from app.infrastructure.database.base_model import Base
 
 
 class TodoRecord(Base):

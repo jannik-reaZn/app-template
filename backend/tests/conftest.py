@@ -3,8 +3,8 @@ from collections.abc import Iterator
 import pytest
 from polyfactory.pytest_plugin import register_fixture
 
-from app.core.database.base_model import Base
-from app.core.database.sqlite import SqliteSession
+from app.infrastructure.database.base_model import Base
+from app.infrastructure.database.sqlite import SqliteSession
 from tests.factory.create_todo_request_factory import CreateTodoRequestFactory
 from tests.factory.todo_factory import TodoFactory
 from tests.factory.todo_fixtures import (  # noqa: F401

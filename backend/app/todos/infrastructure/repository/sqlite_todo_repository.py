@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core import DomainError, Result
-from app.core.database.sqlite import SqliteSession
+from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
 from app.todos.domain.interfaces.todo_repository_port import TodoRepositoryPort
