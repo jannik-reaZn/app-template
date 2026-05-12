@@ -36,4 +36,4 @@ def test_post_todos_rejects_blank_title() -> None:
 
     # THEN
     assert response.status_code == 400
-    assert response.json() == {"detail": "Todo title cannot be empty"}
+    assert response.json() == {"detail": "TodoEntity title cannot be empty"}

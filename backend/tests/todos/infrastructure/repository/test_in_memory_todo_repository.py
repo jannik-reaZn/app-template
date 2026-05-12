@@ -1,6 +1,6 @@
 import pytest
 
-from app.todos.domain.entities.todo_entity import Todo
+from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
 from app.todos.infrastructure.repository.in_memory_todo_repository import (
     InMemoryTodoRepository,
@@ -14,7 +14,7 @@ class TestInMemoryTodoRepository:
 
     def test_save_persists_todo(self) -> None:
         # GIVEN
-        todo = Todo.create(title="Pay electricity bill").value
+        todo = TodoEntity.create(title="Pay electricity bill").value
 
         # WHEN
         result = self.repository.save(todo)

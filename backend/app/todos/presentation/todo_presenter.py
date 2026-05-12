@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from app.core import DomainError, Result
-from app.todos.domain.entities.todo_entity import Todo
+from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.presentation.responses.todo_response import TodoResponse
 
 
 class TodoPresenter:
-    def present(self, result: Result[Todo, DomainError]) -> TodoResponse:
+    def present(self, result: Result[TodoEntity, DomainError]) -> TodoResponse:
         if result.is_err:
             raise result.error
 

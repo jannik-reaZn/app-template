@@ -33,4 +33,4 @@ def test_get_todo_returns_not_found_for_missing_id() -> None:
 
     # THEN
     assert response.status_code == 404
-    assert response.json() == {"detail": "Todo not found"}
+    assert response.json() == {"detail": "TodoEntity not found"}

@@ -4,7 +4,7 @@ import pytest
 
 from app.core import DomainError, Result
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
-from app.todos.domain.entities.todo_entity import Todo
+from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.domain.enums.todo_status import TodoStatus
 from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
 from tests.factory.todo_factory import TodoFactory
@@ -18,7 +18,7 @@ class TestCreateTodoUseCase:
         todo_factory: TodoFactory,
     ) -> None:
         self.create_todo_use_case = create_todo_use_case
-        self.todo: Todo = todo_factory.build(status=TodoStatus.PENDING)
+        self.todo: TodoEntity = todo_factory.build(status=TodoStatus.PENDING)
 
     def test_returns_pending_todo(self) -> None:
         # GIVEN
@@ -26,7 +26,7 @@ class TestCreateTodoUseCase:
         pending: TodoStatus = self.todo.status
 
         # WHEN
-        todo: Result[Todo, DomainError] = self.create_todo_use_case(
+        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(
             title=title, status=pending
         )
 
@@ -41,7 +41,7 @@ class TestCreateTodoUseCase:
         title: str = "   "
 
         # WHEN
-        todo: Result[Todo, DomainError] = self.create_todo_use_case(title=title)
+        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(title=title)
 
         # THEN
         assert todo.is_err is True

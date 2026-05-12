@@ -10,9 +10,9 @@ from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
 from app.todos.domain.value_objects.todo_title import TodoTitle
 
 
-class Todo(DomainModel):
+class TodoEntity(DomainModel):
     id: str = Field(
-        title="Todo ID",
+        title="TodoEntity ID",
         description="A UUID string that uniquely identifies the todo item.",
         default_factory=lambda: str(uuid4()),
         examples=["550e8400-e29b-41d4-a716-446655440000"],
@@ -28,7 +28,7 @@ class Todo(DomainModel):
     @classmethod
     def create(
         cls, title: str, status: TodoStatus = TodoStatus.PENDING
-    ) -> Result[Todo, DomainError]:
+    ) -> Result[TodoEntity, DomainError]:
         title_result = TodoTitle.create(title)
         if title_result.is_err:
             return Result.err(EmptyTodoTitleError())

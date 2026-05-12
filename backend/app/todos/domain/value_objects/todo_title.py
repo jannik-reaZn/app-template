@@ -8,7 +8,7 @@ from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
 
 class TodoTitle(DomainModel):
     value: str = Field(
-        title="Todo title",
+        title="TodoEntity title",
         description="A normalized, non-empty title for a todo item.",
         examples=["Pay electricity bill"],
     )

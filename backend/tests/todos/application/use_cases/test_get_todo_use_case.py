@@ -2,7 +2,7 @@ import pytest
 
 from app.core import DomainError, Result
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
-from app.todos.domain.entities.todo_entity import Todo
+from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
 from app.todos.domain.interfaces.todo_repository_port import TodoRepositoryPort
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
@@ -21,14 +21,14 @@ class TestGetTodoUseCase:
     ) -> None:
         self.todo_repository: TodoRepositoryPort = todo_repository
         self.get_todo_use_case: GetTodoUseCase = get_todo_use_case
-        self.todo: Todo = todo_factory.build()
+        self.todo: TodoEntity = todo_factory.build()
 
     def test_returns_existing_todo(self) -> None:
         # GIVEN
         self.todo_repository.save(self.todo)
 
         # WHEN
-        todo: Result[Todo, DomainError] = self.get_todo_use_case(self.todo.id)
+        todo: Result[TodoEntity, DomainError] = self.get_todo_use_case(self.todo.id)
 
         # THEN
         assert todo.is_ok is True
@@ -41,7 +41,7 @@ class TestGetTodoUseCase:
         missing_todo_id: str = "missing-todo"
 
         # WHEN
-        todo: Result[Todo, DomainError] = self.get_todo_use_case(missing_todo_id)
+        todo: Result[TodoEntity, DomainError] = self.get_todo_use_case(missing_todo_id)
 
         # THEN
         assert todo.is_err is True
