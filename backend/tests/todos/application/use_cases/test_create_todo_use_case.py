@@ -3,6 +3,7 @@ from uuid import UUID
 import pytest
 
 from app.core import DomainError, Result
+from app.todos.application.commands.create_todo_command import CreateTodoCommand
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
 from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.domain.enums.todo_status import TodoStatus
@@ -24,11 +25,10 @@ class TestCreateTodoUseCase:
         # GIVEN
         title: str = self.todo.title.value
         pending: TodoStatus = self.todo.status
+        command = CreateTodoCommand(title=title, status=pending)
 
         # WHEN
-        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(
-            title=title, status=pending
-        )
+        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(command)
 
         # THEN
         assert todo.is_ok is True
@@ -39,9 +39,10 @@ class TestCreateTodoUseCase:
     def test_returns_error_for_blank_title(self) -> None:
         # GIVEN
         title: str = "   "
+        command = CreateTodoCommand(title=title)
 
         # WHEN
-        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(title=title)
+        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(command)
 
         # THEN
         assert todo.is_err is True

@@ -4,6 +4,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
 
+from app.todos.application.queries.get_todo_query import GetTodoQuery
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.presentation.dependencies.todo_dependencies import (
@@ -26,7 +27,7 @@ def create_todo(
     ],
     todo_presenter: Annotated[TodoPresenter, Depends(get_todo_presenter)],
 ) -> TodoResponse:
-    return todo_presenter.present(create_todo_use_case(title=request.title))
+    return todo_presenter.present(create_todo_use_case(request.to_command()))
 
 
 @router.get(
@@ -39,4 +40,4 @@ def get_todo(
     get_todo_use_case: Annotated[GetTodoUseCase, Depends(get_get_todo_use_case)],
     todo_presenter: Annotated[TodoPresenter, Depends(get_todo_presenter)],
 ) -> TodoResponse:
-    return todo_presenter.present(get_todo_use_case(todo_id))
+    return todo_presenter.present(get_todo_use_case(GetTodoQuery(todo_id=todo_id)))
