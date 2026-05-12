@@ -6,6 +6,10 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.todos.infrastructure.repository.todo_repository_backend import (
+    TodoRepositoryType,
+)
+
 BACKEND_ROOT = Path(__file__).resolve().parent
 
 
@@ -23,6 +27,10 @@ class DatabaseSettings(BaseModel):
     connect_args: dict[str, object] = {"check_same_thread": False}
 
 
+class TodoSettings(BaseModel):
+    repository_backend: TodoRepositoryType = TodoRepositoryType.SQLITE
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="APP_",
@@ -32,6 +40,7 @@ class Settings(BaseSettings):
 
     app: AppSettings = Field(default_factory=AppSettings)
     database: DatabaseSettings = Field(default_factory=DatabaseSettings)
+    todo: TodoSettings = Field(default_factory=TodoSettings)
 
 
 @lru_cache

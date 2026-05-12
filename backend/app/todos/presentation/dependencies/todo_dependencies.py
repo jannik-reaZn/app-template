@@ -10,8 +10,11 @@ from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.domain.interfaces.todo_repository_port import TodoRepositoryPort
-from app.todos.infrastructure.repository.sqlite_todo_repository import (
-    SqliteTodoRepository,
+from app.todos.infrastructure.repository.in_memory_todo_repository import (
+    InMemoryTodoRepository,
+)
+from app.todos.infrastructure.repository.todo_repository_factory import (
+    create_todo_repository,
 )
 from app.todos.presentation.todo_presenter import TodoPresenter
 from settings import settings
@@ -25,10 +28,17 @@ def get_sqlite_session() -> SqliteSession:
     )
 
 
-def get_todo_repository(
-    session: Annotated[SqliteSession, Depends(get_sqlite_session)],
-) -> TodoRepositoryPort:
-    return SqliteTodoRepository(session)
+@lru_cache
+def get_in_memory_todo_repository() -> InMemoryTodoRepository:
+    return InMemoryTodoRepository()
+
+
+def get_todo_repository() -> TodoRepositoryPort:
+    return create_todo_repository(
+        settings.todo.repository_backend,
+        sqlite_session=get_sqlite_session(),
+        in_memory_repository=get_in_memory_todo_repository(),
+    )
 
 
 def get_create_todo_use_case(
