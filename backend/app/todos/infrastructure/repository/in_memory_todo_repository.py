@@ -3,7 +3,7 @@ from __future__ import annotations
 from app.core import DomainError, Result
 from app.todos.domain.entities.todo_entity import Todo
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
-from app.todos.domain.interfaces.todo_repository import TodoRepositoryPort
+from app.todos.domain.interfaces.todo_repository_port import TodoRepositoryPort
 
 
 class InMemoryTodoRepository(TodoRepositoryPort):
