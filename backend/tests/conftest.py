@@ -9,6 +9,7 @@ from tests.factory.create_todo_request_factory import CreateTodoRequestFactory
 from tests.factory.todo_factory import TodoFactory
 from tests.factory.todo_fixtures import (  # noqa: F401
     create_todo_use_case,
+    delete_todo_use_case,
     get_todo_use_case,
     todo_in_memory_repository,
     todo_repository,

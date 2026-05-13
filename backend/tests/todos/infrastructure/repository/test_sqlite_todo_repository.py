@@ -166,3 +166,25 @@ class TestSqliteTodoRepository:
         assert sorted(link.todo_id for link in groceries_links) == sorted(
             [first_todo.id, second_todo.id]
         )
+
+    def test_delete_removes_existing_todo(self) -> None:
+        # GIVEN
+        todo = TodoFactory.build()
+        self.repository.save(todo)
+
+        # WHEN
+        result = self.repository.delete(todo.id)
+        persisted_todo = self.repository.get_by_id(todo.id)
+
+        # THEN
+        assert result.is_ok is True
+        assert persisted_todo.is_err is True
+        assert isinstance(persisted_todo.error, TodoNotFoundError)
+
+    def test_delete_returns_not_found_error_for_missing_todo(self) -> None:
+        # WHEN
+        result = self.repository.delete("missing-todo")
+
+        # THEN
+        assert result.is_err is True
+        assert isinstance(result.error, TodoNotFoundError)

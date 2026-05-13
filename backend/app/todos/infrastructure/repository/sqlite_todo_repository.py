@@ -40,6 +40,17 @@ class SqliteTodoRepository(TodoRepositoryPort):
         self.session.commit()
         return Result.ok(todo)
 
+    def delete(self, todo_id: str) -> Result[None, DomainError]:
+        statement = select(TodoRecord).where(TodoRecord.todo_id == todo_id)
+        todo_record = self.session.scalar(statement)
+
+        if todo_record is None:
+            return Result.err(TodoNotFoundError(todo_id))
+
+        self.session.delete(todo_record)
+        self.session.commit()
+        return Result.ok(None)
+
     def _create(self, todo: TodoEntity) -> None:
         self._ensure_tags_exist(todo.tags)
         self.session.add(TodoRecordMapper.to_record(todo))

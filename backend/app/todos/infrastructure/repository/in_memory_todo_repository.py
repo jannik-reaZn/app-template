@@ -19,3 +19,10 @@ class InMemoryTodoRepository(TodoRepositoryPort):
     def save(self, todo: TodoEntity) -> Result[TodoEntity, DomainError]:
         self.items[todo.id] = todo
         return Result.ok(todo)
+
+    def delete(self, todo_id: str) -> Result[None, DomainError]:
+        if todo_id not in self.items:
+            return Result.err(TodoNotFoundError(todo_id))
+
+        del self.items[todo_id]
+        return Result.ok(None)

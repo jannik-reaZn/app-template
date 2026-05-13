@@ -2,6 +2,7 @@ import pytest
 
 from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.application.use_cases.create_todo_use_case import CreateTodoUseCase
+from app.todos.application.use_cases.delete_todo_use_case import DeleteTodoUseCase
 from app.todos.application.use_cases.get_todo_use_case import GetTodoUseCase
 from app.todos.infrastructure.repository.in_memory_todo_repository import (
     InMemoryTodoRepository,
@@ -31,3 +32,10 @@ def get_todo_use_case(
     todo_repository: SqliteTodoRepository,
 ) -> GetTodoUseCase:
     return GetTodoUseCase(todo_repository)
+
+
+@pytest.fixture
+def delete_todo_use_case(
+    todo_repository: SqliteTodoRepository,
+) -> DeleteTodoUseCase:
+    return DeleteTodoUseCase(todo_repository)
