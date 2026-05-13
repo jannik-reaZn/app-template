@@ -2,16 +2,16 @@ from __future__ import annotations
 
 from fastmcp import FastMCP
 
+from app.tools.check_outdated_packages import check_outdated_packages
+from app.tools.detect_template_drift import detect_template_drift
+from app.tools.get_file_structure import get_file_structure
+from app.tools.get_package_changelog import get_package_changelog
+from app.tools.get_package_version import get_package_version
+from app.tools.get_project_info import get_project_info
+from app.tools.get_python_version import get_python_version
+from app.tools.list_packages import list_packages
+from app.tools.suggest_drift_fixes import suggest_drift_fixes
 from settings import settings
-from tools.check_outdated_packages import check_outdated_packages
-from tools.detect_template_drift import detect_template_drift
-from tools.get_file_structure import get_file_structure
-from tools.get_package_changelog import get_package_changelog
-from tools.get_package_version import get_package_version
-from tools.get_project_info import get_project_info
-from tools.get_python_version import get_python_version
-from tools.list_packages import list_packages
-from tools.suggest_drift_fixes import suggest_drift_fixes
 
 mcp = FastMCP(name=settings.app.mcp_name)
 

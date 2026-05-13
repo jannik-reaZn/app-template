@@ -4,7 +4,11 @@ from enum import StrEnum
 
 from pydantic import BaseModel
 
-from utils.readers import parse_python_deps, read_package_json, read_pyproject
+from app.tools.utils.readers import (
+    parse_python_deps,
+    read_package_json,
+    read_pyproject,
+)
 
 
 class EcosystemEnum(StrEnum):

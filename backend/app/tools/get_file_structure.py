@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from utils.constants import WORKSPACE_ROOT
+from app.tools.utils.constants import WORKSPACE_ROOT
 
 _SKIP_DIRS = {"node_modules", "__pycache__", ".venv", "dist", ".git", ".mypy_cache"}
 _SHOW_DOTFILES = {".python-version", ".gitignore"}

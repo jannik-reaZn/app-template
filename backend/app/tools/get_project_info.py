@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from utils.constants import TEMPLATE_BASELINE
-from utils.readers import parse_python_deps, read_package_json, read_pyproject
+from app.tools.utils.constants import TEMPLATE_BASELINE
+from app.tools.utils.readers import parse_python_deps, read_package_json, read_pyproject
 
 
 def get_project_info() -> dict:

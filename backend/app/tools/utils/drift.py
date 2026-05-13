@@ -1,7 +1,11 @@
 from __future__ import annotations
 
-from utils.constants import TEMPLATE_BASELINE, WORKSPACE_ROOT
-from utils.readers import parse_python_deps, read_package_json, read_pyproject
+from app.tools.utils.constants import TEMPLATE_BASELINE, WORKSPACE_ROOT
+from app.tools.utils.readers import (
+    parse_python_deps,
+    read_package_json,
+    read_pyproject,
+)
 
 
 def compute_drift() -> dict:

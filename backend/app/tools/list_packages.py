@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from utils.readers import parse_python_deps, read_package_json, read_pyproject
+from app.tools.utils.readers import parse_python_deps, read_package_json, read_pyproject
 
 
 def list_packages() -> dict:

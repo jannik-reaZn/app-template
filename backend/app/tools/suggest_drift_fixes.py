@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from utils.drift import compute_drift
+from app.tools.utils.drift import compute_drift
 
 
 def suggest_drift_fixes() -> dict:

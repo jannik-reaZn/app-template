@@ -5,7 +5,7 @@ from typing import Literal
 
 import httpx
 
-from utils.readers import parse_python_deps, read_package_json, read_pyproject
+from app.tools.utils.readers import parse_python_deps, read_package_json, read_pyproject
 
 
 async def check_outdated_packages(

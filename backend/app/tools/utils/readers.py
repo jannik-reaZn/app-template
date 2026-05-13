@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import tomllib
 
-from utils.constants import WORKSPACE_ROOT
+from app.tools.utils.constants import WORKSPACE_ROOT
 
 
 def read_pyproject() -> dict:

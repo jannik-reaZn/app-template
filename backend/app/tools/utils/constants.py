@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-# Two levels up from utils/: backend/utils/ → backend/ → app-template/
-WORKSPACE_ROOT = Path(__file__).parent.parent.parent
+# Four levels up from app/tools/utils/: utils/ → tools/ → app/ → backend/ → app-template/
+WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
 
 TEMPLATE_BASELINE: dict = {
     "python_version": "3.14",
