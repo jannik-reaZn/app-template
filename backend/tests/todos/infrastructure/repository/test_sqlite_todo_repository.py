@@ -4,7 +4,13 @@ from sqlalchemy import select
 from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
 from app.todos.domain.value_objects.todo_note import TodoNote
-from app.todos.infrastructure.database.todo_model import TodoNoteRecord, TodoRecord
+from app.todos.domain.value_objects.todo_tag import TodoTag
+from app.todos.infrastructure.database.todo_model import (
+    TodoNoteRecord,
+    TodoRecord,
+    TodoTagLinkRecord,
+    TodoTagRecord,
+)
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
     SqliteTodoRepository,
 )
@@ -101,3 +107,62 @@ class TestSqliteTodoRepository:
             "Buy oat milk",
             "Check pantry first",
         ]
+
+    def test_save_persists_non_existing_tags(self) -> None:
+        # GIVEN
+        tags: list[str] = ["errands", "groceries"]
+        todo = TodoFactory.build(tags=tuple(TodoTag(name=tag) for tag in tags))
+
+        # WHEN
+        persisted_todo = self.repository.save(todo)
+        tag_records = self.session.scalars(select(TodoTagRecord)).all()
+        tag_links = self.session.scalars(
+            select(TodoTagLinkRecord).where(TodoTagLinkRecord.todo_id == todo.id)
+        ).all()
+
+        # THEN
+        assert persisted_todo.is_ok is True
+        assert persisted_todo.value.tags == todo.tags
+        assert sorted(record.name for record in tag_records) == sorted(tags)
+        assert sorted(link.tag_name for link in tag_links) == sorted(tags)
+
+    def test_save_reuses_existing_tags(self) -> None:
+        # GIVEN
+        first_todo = TodoFactory.build(
+            tags=(
+                TodoTag(name="groceries"),
+                TodoTag(name="weekly"),
+            )
+        )
+        second_todo = TodoFactory.build(
+            tags=(
+                TodoTag(name="groceries"),
+                TodoTag(name="urgent"),
+            )
+        )
+
+        # WHEN
+        first_result = self.repository.save(first_todo)
+        second_result = self.repository.save(second_todo)
+
+        tag_records = self.session.scalars(select(TodoTagRecord)).all()
+        groceries_records = self.session.scalars(
+            select(TodoTagRecord).where(TodoTagRecord.name == "groceries")
+        ).all()
+        groceries_links = self.session.scalars(
+            select(TodoTagLinkRecord).where(TodoTagLinkRecord.tag_name == "groceries")
+        ).all()
+
+        # THEN
+        assert first_result.is_ok is True
+        assert second_result.is_ok is True
+        # The "groceries" tag should only be created once and linked to both todos
+        assert sorted(record.name for record in tag_records) == [
+            "groceries",
+            "urgent",
+            "weekly",
+        ]
+        assert len(groceries_records) == 1
+        assert sorted(link.todo_id for link in groceries_links) == sorted(
+            [first_todo.id, second_todo.id]
+        )

@@ -8,6 +8,7 @@ from app.core import DomainError, DomainModel, Result
 from app.todos.domain.enums.todo_status import TodoStatus
 from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
 from app.todos.domain.value_objects.todo_note import TodoNote
+from app.todos.domain.value_objects.todo_tag import TodoTag
 from app.todos.domain.value_objects.todo_title import TodoTitle
 
 
@@ -29,6 +30,10 @@ class TodoEntity(DomainModel):
         title="Notes attached to the todo item",
         default_factory=tuple,
     )
+    tags: tuple[TodoTag, ...] = Field(
+        title="Tags attached to the todo item",
+        default_factory=tuple,
+    )
 
     @classmethod
     def create(
@@ -36,8 +41,11 @@ class TodoEntity(DomainModel):
         title: str,
         status: TodoStatus = TodoStatus.PENDING,
         notes: tuple[TodoNote, ...] = (),
+        tags: tuple[TodoTag, ...] = (),
     ) -> Result[TodoEntity, DomainError]:
         title_result = TodoTitle.create(title)
         if title_result.is_err:
             return Result.err(EmptyTodoTitleError())
-        return Result.ok(cls(title=title_result.value, status=status, notes=notes))
+        return Result.ok(
+            cls(title=title_result.value, status=status, notes=notes, tags=tags)
+        )

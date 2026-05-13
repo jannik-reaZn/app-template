@@ -7,3 +7,4 @@ class TodoResponse(BaseSchema):
     title: str
     status: TodoStatus
     notes: list[str]
+    tags: list[str]

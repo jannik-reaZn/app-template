@@ -25,18 +25,19 @@ def test_post_todos_creates_pending_todo() -> None:
         "title": payload.title,
         "status": "pending",
         "notes": [],
+        "tags": [],
     }
 
 
 def test_post_todos_creates_todo_with_notes() -> None:
     # GIVEN
-    payload: dict[str, object] = {
-        "title": "Buy groceries",
-        "notes": ["Buy oat milk", "Check pantry first"],
-    }
+    payload = CreateTodoRequestFactory.build(
+        title="Buy groceries",
+        notes=["Buy oat milk", "Check pantry first"],
+    )
 
     # WHEN
-    response = client.post("/api/todos", json=payload)
+    response = client.post("/api/todos", json=payload.model_dump())
 
     # THEN
     assert response.status_code == 201
@@ -44,18 +45,42 @@ def test_post_todos_creates_todo_with_notes() -> None:
 
     assert response_body == {
         "id": response_body["id"],
-        "title": "Buy groceries",
+        "title": payload.title,
         "status": "pending",
-        "notes": ["Buy oat milk", "Check pantry first"],
+        "notes": payload.notes,
+        "tags": [],
+    }
+
+
+def test_post_todos_creates_todo_with_tags() -> None:
+    # GIVEN
+    payload = CreateTodoRequestFactory.build(
+        title="Buy groceries",
+        tags=["groceries", "weekly"],
+    )
+
+    # WHEN
+    response = client.post("/api/todos", json=payload.model_dump())
+
+    # THEN
+    assert response.status_code == 201
+    response_body = response.json()
+
+    assert response_body == {
+        "id": response_body["id"],
+        "title": payload.title,
+        "status": "pending",
+        "notes": [],
+        "tags": payload.tags,
     }
 
 
 def test_post_todos_rejects_blank_title() -> None:
     # GIVEN
-    payload: dict[str, str] = {"title": "   "}
+    payload = CreateTodoRequestFactory.build(title="   ")
 
     # WHEN
-    response = client.post("/api/todos", json=payload)
+    response = client.post("/api/todos", json=payload.model_dump())
 
     # THEN
     assert response.status_code == 400

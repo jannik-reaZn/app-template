@@ -10,3 +10,4 @@ class CreateTodoCommand:
     title: str
     status: TodoStatus = TodoStatus.PENDING
     notes: tuple[str, ...] = field(default_factory=tuple)
+    tags: tuple[str, ...] = field(default_factory=tuple)

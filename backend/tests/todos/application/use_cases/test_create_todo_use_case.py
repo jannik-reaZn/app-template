@@ -35,6 +35,7 @@ class TestCreateTodoUseCase:
         assert UUID(todo.value.id)
         assert todo.value.title.value == title
         assert todo.value.status == "pending"
+        assert todo.value.tags == ()
 
     def test_returns_error_for_blank_title(self) -> None:
         # GIVEN
@@ -64,3 +65,17 @@ class TestCreateTodoUseCase:
             "Buy oat milk",
             "Check pantry first",
         ]
+
+    def test_returns_todo_with_tags(self) -> None:
+        # GIVEN
+        command = CreateTodoCommand(
+            title="Buy groceries",
+            tags=("groceries", "weekly"),
+        )
+
+        # WHEN
+        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(command)
+
+        # THEN
+        assert todo.is_ok is True
+        assert [tag.name for tag in todo.value.tags] == ["groceries", "weekly"]

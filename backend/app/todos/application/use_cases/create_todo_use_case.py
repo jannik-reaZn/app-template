@@ -5,6 +5,7 @@ from app.todos.application.commands.create_todo_command import CreateTodoCommand
 from app.todos.domain.entities.todo_entity import TodoEntity
 from app.todos.domain.interfaces.todo_repository_port import TodoRepositoryPort
 from app.todos.domain.value_objects.todo_note import TodoNote
+from app.todos.domain.value_objects.todo_tag import TodoTag
 
 
 class CreateTodoUseCase:
@@ -16,6 +17,7 @@ class CreateTodoUseCase:
             title=command.title,
             status=command.status,
             notes=tuple(TodoNote(content=note) for note in command.notes),
+            tags=tuple(TodoTag(name=tag) for tag in command.tags),
         )
         if todo_result.is_err:
             return todo_result

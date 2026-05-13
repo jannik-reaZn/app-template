@@ -22,16 +22,17 @@ def test_get_todo_returns_existing_todo() -> None:
         "title": payload.title,
         "status": "pending",
         "notes": [],
+        "tags": [],
     }
 
 
 def test_get_todo_returns_existing_todo_with_notes() -> None:
     # GIVEN
-    payload: dict[str, object] = {
-        "title": "Buy groceries",
-        "notes": ["Buy oat milk", "Check pantry first"],
-    }
-    created_response = client.post("/api/todos", json=payload)
+    payload = CreateTodoRequestFactory.build(
+        title="Buy groceries",
+        notes=["Buy oat milk", "Check pantry first"],
+    )
+    created_response = client.post("/api/todos", json=payload.model_dump())
 
     # WHEN
     todo_id = created_response.json()["id"]
@@ -41,9 +42,33 @@ def test_get_todo_returns_existing_todo_with_notes() -> None:
     assert response.status_code == 200
     assert response.json() == {
         "id": todo_id,
-        "title": "Buy groceries",
+        "title": payload.title,
         "status": "pending",
-        "notes": ["Buy oat milk", "Check pantry first"],
+        "notes": payload.notes,
+        "tags": [],
+    }
+
+
+def test_get_todo_returns_existing_todo_with_tags() -> None:
+    # GIVEN
+    payload = CreateTodoRequestFactory.build(
+        title="Buy groceries",
+        tags=["groceries", "weekly"],
+    )
+    created_response = client.post("/api/todos", json=payload.model_dump())
+
+    # WHEN
+    todo_id = created_response.json()["id"]
+    response = client.get(f"/api/todos/{todo_id}")
+
+    # THEN
+    assert response.status_code == 200
+    assert response.json() == {
+        "id": todo_id,
+        "title": payload.title,
+        "status": "pending",
+        "notes": [],
+        "tags": payload.tags,
     }
 
 
