@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.todos.domain.enums.todo_status import TodoStatus
 
@@ -9,3 +9,4 @@ from app.todos.domain.enums.todo_status import TodoStatus
 class CreateTodoCommand:
     title: str
     status: TodoStatus = TodoStatus.PENDING
+    notes: tuple[str, ...] = field(default_factory=tuple)

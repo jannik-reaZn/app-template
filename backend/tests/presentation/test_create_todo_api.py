@@ -24,6 +24,29 @@ def test_post_todos_creates_pending_todo() -> None:
         "id": response_body["id"],
         "title": payload.title,
         "status": "pending",
+        "notes": [],
+    }
+
+
+def test_post_todos_creates_todo_with_notes() -> None:
+    # GIVEN
+    payload: dict[str, object] = {
+        "title": "Buy groceries",
+        "notes": ["Buy oat milk", "Check pantry first"],
+    }
+
+    # WHEN
+    response = client.post("/api/todos", json=payload)
+
+    # THEN
+    assert response.status_code == 201
+    response_body = response.json()
+
+    assert response_body == {
+        "id": response_body["id"],
+        "title": "Buy groceries",
+        "status": "pending",
+        "notes": ["Buy oat milk", "Check pantry first"],
     }
 
 

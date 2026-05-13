@@ -3,7 +3,8 @@ from sqlalchemy import select
 
 from app.infrastructure.database.sqlite import SqliteSession
 from app.todos.domain.errors.todo_errors import TodoNotFoundError
-from app.todos.infrastructure.database.todo_model import TodoRecord
+from app.todos.domain.value_objects.todo_note import TodoNote
+from app.todos.infrastructure.database.todo_model import TodoNoteRecord, TodoRecord
 from app.todos.infrastructure.repository.sqlite_todo_repository import (
     SqliteTodoRepository,
 )
@@ -75,3 +76,28 @@ class TestSqliteTodoRepository:
         assert second_result.is_ok is True
         assert len(records) == 1
         assert records[0].title == "Updated title"
+
+    def test_save_persists_todo_notes(self) -> None:
+        # GIVEN
+        todo = TodoFactory.build(
+            notes=(
+                TodoNote(content="Buy oat milk"),
+                TodoNote(content="Check pantry first"),
+            )
+        )
+
+        # WHEN
+        result = self.repository.save(todo)
+        persisted_todo = self.repository.get_by_id(todo.id)
+        note_records = self.session.scalars(
+            select(TodoNoteRecord).where(TodoNoteRecord.todo_id == todo.id)
+        ).all()
+
+        # THEN
+        assert result.is_ok is True
+        assert persisted_todo.is_ok is True
+        assert persisted_todo.value.notes == todo.notes
+        assert [record.content for record in note_records] == [
+            "Buy oat milk",
+            "Check pantry first",
+        ]

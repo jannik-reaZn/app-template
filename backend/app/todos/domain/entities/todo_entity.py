@@ -7,6 +7,7 @@ from pydantic import Field
 from app.core import DomainError, DomainModel, Result
 from app.todos.domain.enums.todo_status import TodoStatus
 from app.todos.domain.errors.todo_errors import EmptyTodoTitleError
+from app.todos.domain.value_objects.todo_note import TodoNote
 from app.todos.domain.value_objects.todo_title import TodoTitle
 
 
@@ -24,12 +25,19 @@ class TodoEntity(DomainModel):
         default=TodoStatus.PENDING,
         examples=["pending", "completed"],
     )
+    notes: tuple[TodoNote, ...] = Field(
+        title="Notes attached to the todo item",
+        default_factory=tuple,
+    )
 
     @classmethod
     def create(
-        cls, title: str, status: TodoStatus = TodoStatus.PENDING
+        cls,
+        title: str,
+        status: TodoStatus = TodoStatus.PENDING,
+        notes: tuple[TodoNote, ...] = (),
     ) -> Result[TodoEntity, DomainError]:
         title_result = TodoTitle.create(title)
         if title_result.is_err:
             return Result.err(EmptyTodoTitleError())
-        return Result.ok(cls(title=title_result.value, status=status))
+        return Result.ok(cls(title=title_result.value, status=status, notes=notes))

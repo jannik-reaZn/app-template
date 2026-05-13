@@ -47,3 +47,20 @@ class TestCreateTodoUseCase:
         # THEN
         assert todo.is_err is True
         assert isinstance(todo.error, EmptyTodoTitleError)
+
+    def test_returns_todo_with_notes(self) -> None:
+        # GIVEN
+        command = CreateTodoCommand(
+            title="Buy groceries",
+            notes=("Buy oat milk", "Check pantry first"),
+        )
+
+        # WHEN
+        todo: Result[TodoEntity, DomainError] = self.create_todo_use_case(command)
+
+        # THEN
+        assert todo.is_ok is True
+        assert [note.content for note in todo.value.notes] == [
+            "Buy oat milk",
+            "Check pantry first",
+        ]

@@ -15,4 +15,5 @@ class TodoPresenter:
             id=todo.id,
             title=todo.title.value,
             status=todo.status,
+            notes=[note.content for note in todo.notes],
         )
