@@ -28,7 +28,7 @@ TEMPLATE_BASELINE: dict = {
     },
     "structure": [
         "backend/main.py",
-        "backend/server.py",
+        "backend/mcp.py",
         "backend/pyproject.toml",
         "backend/.python-version",
         "frontend/index.html",
