@@ -18,10 +18,7 @@ class DatabaseSession:
         )
         session_factory = sessionmaker(bind=self.engine, expire_on_commit=False)
         self.session: Session = session_factory()
-        self._create_schema(metadata)
-
-    def _create_schema(self, metadata: MetaData) -> None:
-        metadata.create_all(self.engine)
+        self.metadata = metadata
 
     def close(self) -> None:
         self.session.close()

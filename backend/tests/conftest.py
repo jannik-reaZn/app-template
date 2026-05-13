@@ -20,6 +20,7 @@ from tests.factory.todo_record_factory import TodoRecordFactory
 @pytest.fixture
 def sqlite_session() -> Iterator[SqliteSession]:
     session = SqliteSession(metadata=Base.metadata, database_path=":memory:")
+    Base.metadata.create_all(session.engine)
     yield session
     session.close()
 
