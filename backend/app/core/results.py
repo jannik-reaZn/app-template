@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from typing import Any, Generic, ParamSpec, TypeVar, cast
+from typing import Any, ParamSpec, TypeVar, cast
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -12,7 +12,7 @@ P = ParamSpec("P")
 
 
 @dataclass(frozen=True, slots=True)
-class Result(Generic[T, E]):
+class Result[T, E]:
     _is_ok: bool
     _value: T | None = None
     _error: E | None = None
@@ -140,15 +140,15 @@ class Result(Generic[T, E]):
         return Result.ok(values)
 
 
-def Ok(value: T) -> Result[T, Any]:
+def Ok[T](value: T) -> Result[T, Any]:
     return Result.ok(value)
 
 
-def Err(error: E) -> Result[Any, E]:
+def Err[E](error: E) -> Result[Any, E]:
     return Result.err(error)
 
 
-def safe(fn: Callable[P, T]) -> Callable[P, Result[T, Exception]]:
+def safe[**P, T](fn: Callable[P, T]) -> Callable[P, Result[T, Exception]]:
     def wrapper(*args: P.args, **kwargs: P.kwargs) -> Result[T, Exception]:
         return Result.from_callable(fn, *args, **kwargs)
 

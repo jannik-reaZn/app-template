@@ -9,7 +9,6 @@ from app.todos.infrastructure.database.todo_model import (
     TodoNoteRecord,
     TodoRecord,
     TodoTagLinkRecord,
-    TodoTagRecord,
 )
 
 
