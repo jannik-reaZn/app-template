@@ -6,8 +6,7 @@
     "ms-python.vscode-pylance",
     "charliermarsh.ruff",
     "astral-sh.ty",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
+    "voidzero.vite-plus-extension-pack",
     "ms-azuretools.vscode-docker"
   ]
 }
