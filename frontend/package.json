@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "vp config --no-agent",
     "dev": "vp dev",
     "build": "vue-tsc -b && vp build",
     "preview": "vp preview",

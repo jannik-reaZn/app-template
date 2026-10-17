@@ -4,6 +4,9 @@ import vue from "@vitejs/plugin-vue";
 // https://vite.dev/config/
 export default defineConfig({
   fmt: {},
+  staged: {
+    "*.{js,jsx,ts,tsx,vue,css,json}": "vp check --fix",
+  },
   lint: {
     jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
     rules: { "vite-plus/prefer-vite-plus-imports": "error" },
