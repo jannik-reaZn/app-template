@@ -1,13 +1,27 @@
 root="$(git rev-parse --show-toplevel)"
 
-# Keep openapi.yaml in sync with the backend whenever backend code is committed.
-if git diff --cached --name-only | grep -q '^backend/.*\.py$'; then
+# Backend checks run only when backend Python files are staged.
+staged_py="$(git diff --cached --name-only --diff-filter=ACMR | grep '^backend/.*\.py$' || true)"
+if [ -n "$staged_py" ]; then
   command -v uv >/dev/null 2>&1 || export PATH="$HOME/.local/bin:$PATH"
   if ! command -v uv >/dev/null 2>&1; then
-    echo "pre-commit: 'uv' not found in PATH, cannot regenerate openapi.yaml" >&2
+    echo "pre-commit: 'uv' not found in PATH, cannot run backend checks" >&2
     exit 1
   fi
-  (cd "$root/backend" && uv run python export_openapi.py >/dev/null) || exit 1
+
+  cd "$root/backend" || exit 1
+
+  # Format and lint only the staged files, then re-stage them.
+  files="$(echo "$staged_py" | sed 's#^backend/##')"
+  uv run ruff format $files || exit 1
+  uv run ruff check --fix $files || exit 1
+  (cd "$root" && git add $staged_py)
+
+  # Type-check the whole backend: errors can appear in files that were not touched.
+  uv run ty check || exit 1
+
+  # Keep openapi.yaml in sync with the backend.
+  uv run python export_openapi.py >/dev/null || exit 1
   git add "$root/openapi.yaml"
 fi
 
