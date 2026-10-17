@@ -23,11 +23,11 @@ uv run pytest
 cd backend && uv run fastapi dev main.py
 
 # Frontend
-cd frontend && npm run dev        # dev server on :5173
-cd frontend && npm run build      # type-check + build
+cd frontend && pnpm dev        # dev server on :5173
+cd frontend && pnpm build      # type-check + build
 ```
 
-Package manager: **uv** for Python, **npm** for Node. Do not use pip or yarn.
+Package manager: **uv** for Python, **pnpm** for Node. Do not use pip, npm or yarn.
 
 ## Conventions
 
@@ -37,5 +37,5 @@ Package manager: **uv** for Python, **npm** for Node. Do not use pip or yarn.
 ## Key Files
 
 - `backend/pyproject.toml` — Python deps (pinned with `==`)
-- `frontend/package.json` — npm deps
+- `frontend/package.json` — frontend deps (pnpm)
 - `frontend/vite.config.ts` — Vite config (host 0.0.0.0, port 5173)
