@@ -16,7 +16,6 @@ BACKEND_ROOT = Path(__file__).resolve().parent
 class AppSettings(BaseModel):
     title: str = "Application Template"
     api_prefix: str = "/api"
-    mcp_name: str = "Application Template Reference MCP"
 
 
 class DatabaseSettings(BaseModel):
