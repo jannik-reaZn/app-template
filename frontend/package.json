@@ -5,19 +5,22 @@
   "type": "module",
   "scripts": {
     "prepare": "vp config --no-agent",
-    "dev": "vp dev",
-    "build": "vue-tsc -b && vp build",
+    "postinstall": "pnpm gen:api",
+    "dev": "pnpm gen:api && vp dev",
+    "build": "pnpm gen:api && vue-tsc -b && vp build",
     "preview": "vp preview",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix",
     "format": "vp fmt",
     "format:check": "vp fmt --check",
-    "check": "vp check"
+    "check": "vp check",
+    "gen:api": "openapi-ts"
   },
   "dependencies": {
     "vue": "^3.5.30"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.99.0",
     "@types/node": "^24.12.0",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vue/tsconfig": "^0.9.0",

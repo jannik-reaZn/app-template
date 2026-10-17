@@ -1,1 +1,14 @@
-cd frontend && ./node_modules/.bin/vp staged
+root="$(git rev-parse --show-toplevel)"
+
+# Keep openapi.yaml in sync with the backend whenever backend code is committed.
+if git diff --cached --name-only | grep -q '^backend/.*\.py$'; then
+  command -v uv >/dev/null 2>&1 || export PATH="$HOME/.local/bin:$PATH"
+  if ! command -v uv >/dev/null 2>&1; then
+    echo "pre-commit: 'uv' not found in PATH, cannot regenerate openapi.yaml" >&2
+    exit 1
+  fi
+  (cd "$root/backend" && uv run python export_openapi.py >/dev/null) || exit 1
+  git add "$root/openapi.yaml"
+fi
+
+cd "$root/frontend" && ./node_modules/.bin/vp staged

@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: Application Template
+  version: 0.1.0
+paths:
+  /api/todos:
+    post:
+      tags:
+      - todos
+      summary: Create Todo
+      operationId: create_todo_api_todos_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/todos/{todo_id}:
+    get:
+      tags:
+      - todos
+      summary: Get Todo
+      operationId: get_todo_api_todos__todo_id__get
+      parameters:
+      - name: todo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Todo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - todos
+      summary: Delete Todo
+      operationId: delete_todo_api_todos__todo_id__delete
+      parameters:
+      - name: todo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Todo Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CreateTodoRequest:
+      properties:
+        title:
+          type: string
+          title: Title
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+      additionalProperties: false
+      type: object
+      required:
+      - title
+      title: CreateTodoRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TodoResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        status:
+          $ref: '#/components/schemas/TodoStatus'
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - title
+      - status
+      - notes
+      - tags
+      title: TodoResponse
+    TodoStatus:
+      type: string
+      enum:
+      - pending
+      - completed
+      title: TodoStatus
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
