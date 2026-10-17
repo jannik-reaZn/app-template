@@ -5,15 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.14.*"
 dependencies = [
-    "fastapi[standard]==0.135.3",
+    "fastapi[standard]==0.142.2",
     "httpx==0.28.1",
-    "pydantic-settings==2.14.0",
-    "pytest==9.0.3",
-    "ruff==0.15.9",
-    "ty==0.0.33",
+    "pydantic-settings==2.15.0",
+    "pytest==9.1.1",
+    "ruff==0.16.10",
+    "ty==0.0.84",
     "polyfactory==3.3.0",
-    "SQLAlchemy==2.0.49",
-    "alembic==1.18.4",
+    "SQLAlchemy==2.1.3",
+    "alembic==1.20.0",
     "pyyaml==6.0.3"
 ]
 
