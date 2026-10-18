@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 src/api/
+
+# Nuxt UI generated type declarations
+auto-imports.d.ts
+components.d.ts

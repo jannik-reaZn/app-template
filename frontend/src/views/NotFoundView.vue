@@ -1,10 +1,16 @@
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+</script>
+
 <template>
   <UError
     :error="{
       statusCode: 404,
-      statusMessage: 'Seite nicht gefunden',
-      message: 'Die angeforderte Seite existiert nicht.',
+      statusMessage: t('notFound.title'),
+      message: t('notFound.message'),
     }"
-    :clear="{ label: 'Zur Startseite', to: '/' }"
+    :clear="{ label: t('notFound.home'), to: '/' }"
   />
 </template>
